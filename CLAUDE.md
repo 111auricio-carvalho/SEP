@@ -138,3 +138,36 @@ Validar e rodar os casos ANAFAS:
 
 - `ieee39_base.ana`: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
 - `ieee39_falta_barra4.ana`: falta FT na barra 4, com tensoes em todas as barras e corrente de falta.
+
+## Estado ANAFAS
+
+Arquivos preparados:
+
+- `ieee39_base.ana`
+- `ieee39_falta_barra4.ana`
+
+Esses arquivos agora estao no formato de arquivo primario de rede ANAFAS:
+
+- `100`: base `100.0 MVA`.
+- `38`: barras.
+- `37`: circuitos.
+- `99999`: fim de bloco.
+
+O ANAFAS rejeitou a versao anterior com `DANA/DBAR/DLIN/DTRF/DMAC/DALT`, pois esses codigos textuais nao sao dados de rede primarios para o leitor `LEDATA`.
+
+No bloco `37`, os dados de impedancia em pu do PDF foram convertidos para porcento na base do sistema (`pu * 100`). Linhas, transformadores e geradores foram representados como circuitos `L`, `T` e `G`; geradores ficam ligados a barra de referencia `0`.
+
+Os circuitos de gerador foram corrigidos para mapear cada barra ao `GenN` do enunciado:
+
+- 30/Gen10: `0.0310`
+- 31/Gen2: `0.0697`
+- 32/Gen3: `0.0531`
+- 33/Gen4: `0.0436`
+- 34/Gen5: `0.1320`
+- 35/Gen6: `0.0500`
+- 36/Gen7: `0.0490`
+- 37/Gen8: `0.0570`
+- 38/Gen9: `0.0570`
+- 39/Gen1: `0.0060`
+
+Premissa registrada: como o PDF fornece `x'd`, mas nao traz todos os dados de sequencia negativa/zero, os arquivos usam `X1 = X2 = X0 = x'd` para a primeira validacao no ANAFAS.

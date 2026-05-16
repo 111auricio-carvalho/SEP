@@ -95,10 +95,38 @@ Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corr
 
 ## Proximos passos
 
-1. Usar os CSVs em `results/` para preencher as tabelas do relatorio:
-   - ZIP vs. base;
-   - ZIP carga 110% vs. ZIP original.
-2. Depois disso, validar os arquivos ANAFAS.
+1. Rodar os arquivos ANAFAS:
+   - `ieee39_base.ana`: FT, FF, FFT e simetrica em todas as barras.
+   - `ieee39_falta_barra4.ana`: falta FT na barra 4.
+2. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
+
+## Preparacao ANAFAS
+
+Os arquivos `.ana` usam a mesma topologia do caso ANAREDE validado.
+
+Formato validado para a proxima tentativa:
+
+- Arquivo `.ana` e arquivo primario de rede, nao arquivo de comando de estudo.
+- Bloco `100`: base de potencia em MVA.
+- Bloco `38`: dados de barra.
+- Bloco `37`: dados de circuito, incluindo linhas, transformadores e geradores equivalentes ligados a barra de referencia `0`.
+- Os valores `R1`, `X1`, `R0` e `X0` do bloco `37` ficam em porcento na base do sistema, entao os dados em pu do PDF foram multiplicados por `100`.
+- A especificacao da falta FT na barra 4 deve ser feita no estudo/interativo do ANAFAS ou em arquivo batch/macro separado; ela nao fica misturada no arquivo primario de rede.
+
+Mapeamento de maquinas usado nos circuitos equivalentes de gerador:
+
+- Barra 30: Gen10, `x'd = 0.0310`.
+- Barra 31: Gen2, `x'd = 0.0697`.
+- Barra 32: Gen3, `x'd = 0.0531`.
+- Barra 33: Gen4, `x'd = 0.0436`.
+- Barra 34: Gen5, `x'd = 0.1320`.
+- Barra 35: Gen6, `x'd = 0.0500`.
+- Barra 36: Gen7, `x'd = 0.0490`.
+- Barra 37: Gen8, `x'd = 0.0570`.
+- Barra 38: Gen9, `x'd = 0.0570`.
+- Barra 39: Gen1, `x'd = 0.0060`.
+
+Como o enunciado fornece `x'd`, mas nao fornece dados completos de sequencia negativa e zero, a primeira versao dos arquivos ANAFAS assume `X1 = X2 = X0 = x'd`. Essa premissa deve ser mantida no relatorio ou substituida se o professor fornecer os dados de sequencia.
 
 ## Resultados extraidos
 

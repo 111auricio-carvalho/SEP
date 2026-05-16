@@ -159,3 +159,51 @@ Validar ANAFAS:
 
 - `ieee39_base.ana`: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
 - `ieee39_falta_barra4.ana`: falta FT na barra 4, tensoes em todas as barras e corrente de falta.
+
+## ANAFAS - preparacao inicial
+
+Arquivos:
+
+- `ieee39_base.ana`: arquivo primario de rede ANAFAS.
+- `ieee39_falta_barra4.ana`: copia operacional do arquivo primario de rede ANAFAS para testar a falta FT na barra 4 pelo modo interativo.
+
+O ANAFAS nao leu os codigos textuais `DANA`, `DBAR`, `DLIN`, `DTRF`, `DMAC` e `DALT` quando o arquivo foi carregado como dados de rede. A mensagem `LEDATA 186 - Codigo de execucao nao implementado` indica que o arquivo primario de rede deve usar codigos numericos.
+
+Formato usado na versao atual:
+
+- `100`: base de potencia, com valor `100.0`.
+- `38`: barras.
+- `37`: circuitos.
+- `99999`: fim de bloco.
+
+No bloco `37`, as impedancias sao em porcento na base do sistema. Portanto:
+
+- `R% = Rpu * 100`
+- `X% = Xpu * 100`
+
+Linhas, transformadores e geradores foram todos representados no bloco `37`:
+
+- Tipo `L`: linhas.
+- Tipo `T`: transformadores.
+- Tipo `G`: geradores equivalentes ligados a barra de referencia `0`.
+
+O mapeamento de geradores foi alinhado com a tabela do PDF. O mapeamento correto e pelo `GenN` informado na tabela de barras:
+
+- Barra 30 -> Gen10 -> `x'd = 0.0310`
+- Barra 31 -> Gen2 -> `x'd = 0.0697`
+- Barra 32 -> Gen3 -> `x'd = 0.0531`
+- Barra 33 -> Gen4 -> `x'd = 0.0436`
+- Barra 34 -> Gen5 -> `x'd = 0.1320`
+- Barra 35 -> Gen6 -> `x'd = 0.0500`
+- Barra 36 -> Gen7 -> `x'd = 0.0490`
+- Barra 37 -> Gen8 -> `x'd = 0.0570`
+- Barra 38 -> Gen9 -> `x'd = 0.0570`
+- Barra 39 -> Gen1 -> `x'd = 0.0060`
+
+Premissas ANAFAS ainda pendentes de validacao no programa:
+
+- O enunciado fornece `x'd`, mas nao fornece valores explicitos de sequencia negativa e zero para as maquinas; a versao atual usa `X1 = X2 = X0 = x'd`.
+- Para linhas, a sequencia positiva vem da tabela do PDF; a sequencia zero foi estimada como `R0 = 3R1`, `X0 = 3X1`, `B0 = B1/3`.
+- Para transformadores, a sequencia zero depende da ligacao dos enrolamentos. O arquivo atual ainda deve ser validado no ANAFAS e ajustado conforme as mensagens do programa.
+- A susceptancia de linha foi omitida na primeira tentativa ANAFAS para reduzir risco de erro de formato no bloco `37`; o curto-circuito inicial fica dominado pelas impedancias serie.
+- A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou por arquivo batch/macro separado, nao dentro do arquivo primario de rede.
