@@ -16,6 +16,7 @@ Arquivos de entrada para o trabalho de Sistemas Eletricos de Potencia usando ANA
 - Raiz: arquivos finais de simulacao e documentacao curta.
 - `archive/`: copias antigas preservadas para rastreabilidade.
 - `docs/`: PDFs de enunciado, comandos e codigos de execucao.
+- `results/`: relatorios gerados pelo ANAREDE e tabelas CSV extraidas.
 - `tools/`: instaladores e utilitarios auxiliares.
 
 ## Padrao ANAREDE V13 validado
@@ -74,12 +75,34 @@ Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corr
 
 ## Proximos passos
 
-1. Gerar os relatorios de tensao das barras para os tres casos.
-2. Gerar os relatorios de fluxo/perdas nos ramos para os tres casos.
-3. Comparar:
+1. Usar os CSVs em `results/` para preencher as tabelas do relatorio:
    - ZIP vs. base;
    - ZIP carga 110% vs. ZIP original.
-4. Depois disso, validar os arquivos ANAFAS.
+2. Depois disso, validar os arquivos ANAFAS.
+
+## Resultados extraidos
+
+Os arquivos `RESULTADO_BASE.TXT`, `RESULTADO_ZIP.TXT` e `RESULTADO_ZIP_110.TXT` foram processados para CSVs em `results/`.
+
+Arquivos principais:
+
+- `results/base_buses.csv`
+- `results/zip_buses.csv`
+- `results/zip_110_buses.csv`
+- `results/base_branches.csv`
+- `results/zip_branches.csv`
+- `results/zip_110_branches.csv`
+- `results/compare_zip_vs_base_buses.csv`
+- `results/compare_zip_vs_base_branches.csv`
+- `results/compare_zip110_vs_zip_buses.csv`
+- `results/compare_zip110_vs_zip_branches.csv`
+- `results/relatorio_resumo.md`
+- `results/relatorio_tabelas.md`
+
+Extracao validada:
+
+- 39 barras por caso.
+- 46 ramos por caso.
 
 ## Observacoes de formato
 
