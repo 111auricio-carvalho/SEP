@@ -91,5 +91,9 @@ DLIN
    29        38 1      .08  1.56      1.025
    19        20 1      .07  1.38      1.060
 99999
+ULOG
+4
+resultado_base.txt
 EXLF
+RELA RBAR RLIN
 FIM

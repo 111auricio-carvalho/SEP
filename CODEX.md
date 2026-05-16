@@ -94,3 +94,24 @@ erro max tensao: 0.000 %
 3. Aplicar o mesmo padrao de formato ao `ieee39_zip.pwf`.
 4. Criar/validar o caso ZIP com carga 110%.
 5. Usar os resultados convergidos nas tabelas do relatorio.
+
+## DCAR para modelo ZIP
+
+O codigo correto para carga funcional no ANAREDE e `DCAR`. O codigo `DLOD` foi rejeitado pela V13 com `SELKOD-0100`.
+
+Para o modelo `40Z, 40I, 20P`, usar:
+
+```text
+DCAR
+(tp) ( no) C (tp) ( no) C (tp) ( no) C (tp) ( no)   (A) (B) (C) (D) (Vmn)
+AREA     1                                           40  40  40  40 60.0
+99999
+```
+
+Interpretacao dos parametros:
+
+- `A`: parcela de carga ativa que varia linearmente com a tensao, em %. Para 40% corrente constante, `A=40`.
+- `B`: parcela de carga ativa que varia com o quadrado da tensao, em %. Para 40% impedancia constante, `B=40`.
+- `C`: parcela de carga reativa que varia linearmente com a tensao, em %. Para 40% corrente constante, `C=40`.
+- `D`: parcela de carga reativa que varia com o quadrado da tensao, em %. Para 40% impedancia constante, `D=40`.
+- A parcela de potencia constante fica implicita como `100 - A - B` para P e `100 - C - D` para Q, ou seja, 20%.
