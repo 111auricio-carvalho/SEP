@@ -61,10 +61,10 @@ summary.append(md_table(['Ramo','P ZIP','P ZIP 110','Delta P','Q ZIP','Q ZIP 110
     for r in top_abs(zip110_zip_l, 'delta_p_mw')
 ]))
 summary.append('\n## Observacoes iniciais\n')
-summary.append('- No caso ZIP, as magnitudes de tensao mudaram pouco em relacao ao caso base; as maiores diferencas ficaram em torno de 0.005 pu.')
-summary.append('- No caso ZIP 110%, as maiores quedas relativas de tensao ocorreram nas barras 25, 26, 27 e 28, mas a variacao de modulo ainda ficou pequena.')
-summary.append('- As diferencas angulares foram mais expressivas que as diferencas de modulo, especialmente no aumento de carga de 10%.')
-summary.append('- Os ramos ligados aos geradores e aos corredores 4-5, 5-6 e 6-31 aparecem entre as maiores variacoes de fluxo ativo no caso ZIP 110%.')
+summary.append('- No caso ZIP, as magnitudes de tensao mudaram pouco em relacao ao caso base; as maiores diferencas ficaram em torno de 0.003 pu.')
+summary.append('- No caso ZIP 110%, a maior reducao de tensao ocorreu na barra 39, seguida pelas barras 9 e 1.')
+summary.append('- As diferencas angulares foram mais expressivas no aumento de carga de 10%, especialmente nas barras 39, 9 e 1.')
+summary.append('- Os ramos 9-39, 8-9, 6-31, 1-2 e 1-39 aparecem entre as maiores variacoes de fluxo ativo no caso ZIP 110%.')
 (R / 'relatorio_resumo.md').write_text('\n'.join(summary) + '\n', encoding='utf-8')
 
 full = []

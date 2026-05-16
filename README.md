@@ -58,6 +58,26 @@ Os avisos `INPBUS-0925` apenas indicam area em branco; o ANAREDE adiciona as bar
 - `ieee39_zip.pwf`: convergiu.
 - `ieee39_zip_carga_110.pwf`: convergiu.
 
+Observacao: apos a conferencia direta com `docs/simulacao_2026_1_texto.txt`, foram adicionadas as cargas das barras 31 e 39 que constam no PDF. Os tres casos foram rodados novamente no ANAREDE e os resultados foram reextraidos.
+
+## Conferencia com o enunciado
+
+O PDF `docs/simulaçao_2026_1 (1).pdf` pede:
+
+- Caso base ANAREDE com cargas 100% potencia constante.
+- Fluxos de potencia e perdas nos ramos.
+- Modulo de tensao e angulo em cada barra.
+- Caso especifico ZIP `40, 40, 20`, com comparacao contra o caso base.
+- Aumento de 10% de carga no caso ZIP e comparacao contra o ZIP original.
+- ANAFAS: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
+- ANAFAS especifico: falta FT na barra 4, com tensoes em cada barra e corrente de falta.
+
+Dados corrigidos para aderir ao PDF:
+
+- Barra 31: carga `9.2 MW / 4.6 Mvar`.
+- Barra 39: carga `1104 MW / 250 Mvar`.
+- No caso `ieee39_zip_carga_110.pwf`, essas cargas tambem foram multiplicadas por 1.10.
+
 ## Casos ZIP
 
 Os arquivos `ieee39_zip.pwf` e `ieee39_zip_carga_110.pwf` foram atualizados para usar o mesmo `DBAR` e `DLIN` em colunas fixas do caso base validado.
@@ -83,6 +103,8 @@ Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corr
 ## Resultados extraidos
 
 Os arquivos `RESULTADO_BASE.TXT`, `RESULTADO_ZIP.TXT` e `RESULTADO_ZIP_110.TXT` foram processados para CSVs em `results/`.
+
+Os resultados atuais ja consideram a correcao das cargas das barras 31 e 39.
 
 Arquivos principais:
 

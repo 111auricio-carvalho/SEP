@@ -19,8 +19,8 @@ def read_text(path):
 
 
 def parse_case(path):
-    buses = []
-    branches = []
+    buses = {}
+    branches = {}
     current_bus = None
     current_name = None
     in_bus_report = False
@@ -41,7 +41,7 @@ def parse_case(path):
             if m:
                 num = int(m.group(1))
                 name = f'{m.group(2)} {int(m.group(3)):02d}' if m.group(2) == 'BUS' else f'{m.group(2)} {int(m.group(3))}'
-                buses.append({
+                buses[num] = {
                     'bus': num,
                     'name': name,
                     'type': int(m.group(4)),
@@ -51,7 +51,7 @@ def parse_case(path):
                     'gen_mvar': float(m.group(8)),
                     'load_mw': float(m.group(9)),
                     'load_mvar': float(m.group(10)),
-                })
+                }
         elif in_complete:
             m_bus = re.match(r'^\s*(\d+)\s+\d+\s+\d\s+([0-9.]+)\s+', line)
             if m_bus:
@@ -67,19 +67,20 @@ def parse_case(path):
                 to_bus = int(m.group(1))
                 if current_bus > to_bus:
                     continue
-                branches.append({
+                key = (current_bus, to_bus, int(m.group(4)))
+                branches[key] = {
                     'from_bus': current_bus,
                     'from_name': current_name or '',
                     'to_bus': to_bus,
                     'to_name': f'{m.group(2)} {int(m.group(3)):02d}' if m.group(2) == 'BUS' else f'{m.group(2)} {int(m.group(3))}',
-                    'circuit': int(m.group(4)),
+                    'circuit': key[2],
                     'p_mw': float(m.group(5)),
                     'q_mvar': float(m.group(6)),
                     'mva': float(m.group(7)),
                     'loss_mw': float(m.group(8)),
                     'loss_mvar': float(m.group(9)),
-                })
-    return buses, branches
+                }
+    return [buses[k] for k in sorted(buses)], [branches[k] for k in sorted(branches)]
 
 
 def write_csv(path, rows, fieldnames):
