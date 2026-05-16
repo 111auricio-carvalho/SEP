@@ -1,0 +1,155 @@
+--- PAGE 1 ---
+Códigos de Execução Page 1 of 3
+Introdução
+Códigos de Execução
+O controle de execução do programa é efetuado por meio de Códigos de Execução e de
+Opções de Controle de Execução. De acordo com estes códigos e as opções associadas,
+são selecionadas as funções do programa. A descrição detalhada das opções disponíveis
+encontra-se na seção "Opções de Controle de Execução". Os Códigos de Controle de
+Execução implementados nesta versão são:
+Código Descrição
+TITU Leitura do título do caso.
+DCMT Leitura dos comentários do caso.
+DOPC Leitura das opções de controle de execução padrões.
+DBAR Leitura dos dados de barra CA.
+DSLP Leitura dos dados de barras slack prioritárias.
+DAEB Leitura dos dados de alteração de estado operativo de dados de
+barra CA.
+DGLT Leitura dos dados dos grupos de limites de tensão.
+DGBT Leitura dos dados de grupo base de tensão.
+DGER Leitura dos dados de barra de geração.
+DGEI Leitura dos dados de geradores individualizados.
+DTGR Leitura dos dados de transferência de geração entre regiões.
+DVSA Leitura dos dados de geradores para cálculo da região de
+segurança.
+DMOT Leitura dos dados de motor/gerador de indução.
+DARE Leitura dos dados de área.
+DANC Leitura dos dados de alteração do nível de carga.
+DLIN Leitura dos dados de circuito CA.
+DCTR Leitura dos dados complementares de transformadores.
+DCSC Leitura dos dados de CSC.
+DCER Leitura dos dados de Compensador Estático de Reativos.
+DSHL Leitura dos dados de dispositivos de shunt de circuito CA.
+DBSH Leitura dos dados de bancos de capacitores e/ou reatores
+individualizados.
+DCAR Leitura dos dados de carga função da tensão.
+DCAI Leitura dos dados de cargas individualizadas.
+DCCA Leitura de dados de curva de carga.
+DMTE Leitura dos dados de monitoração de tensão.
+DMGR Leitura dos dados de monitoração de geração de potência reativa.
+DMFL Leitura dos dados de monitoração de fluxo em circuito CA.
+DELO Leitura dos dados de elo CC.
+DCBA Leitura dos dados de barra CC.
+DCLI Leitura dos dados de linha CC.
+DCNV Leitura dos dados de conversor CA-CC.
+DCCV Leitura dos dados de controle de conversor CA-CC.
+DCQV Leitura dos dados para a determinação das curvas Q x V de barras
+do sistema.
+DCRE Leitura dos dados de remoção de pólos ou elos CC.
+DCTG Leitura dos dados de contingência.
+DINJ Leitura dos dados de injeção do modelo equivalente.
+DFCT Leitura dos fatores de aceleração de convergência.
+DVCO Leitura dos dados de variável de controle.
+DCUR Leitura dos dados de curva de custo de variável de controle.
+DRES Leitura dos dados de restrição linear adicional.
+mk:@MSITStore:D:\Cepel\Anarede\V130000\Manuais\anarede.chm::/WordDocumen... 16/05/2026
+
+--- PAGE 2 ---
+Códigos de Execução Page 2 of 3
+DREL Leitura dos dados de barras a serem impressas.
+DCTE Leitura/modificação de dados de constantes.
+DAGR Leitura dos dados de agregadores genéricos.
+DINC Leitura dos fatores que estabelecem a direção do crescimento
+automáticos do carregamento de barras do sistema.
+DMET Leitura dos dados de monitoração para estabilidade de tensão em
+barra CA.
+DMAC Leitura dos dados de macro de Códigos de Execução Anarede.
+DFCR Leitura dos dados de fixação do geradores à aplicação do controle
+CREM.
+DFQL Leitura dos dados de fixação do geradores à aplicação do controle
+QLIM.
+DTPF Leitura dos dados de fixação dos trafos LTC à aplicação do controle
+CTAP.
+DGBA Leitura dos dados de representação gráfica de barra CA.
+DGCA Leitura dos dados de representação gráfica de carga.
+DGGB Leitura dos dados de representação gráfica de grupo de base de
+tensão.
+DGGE Leitura dos dados de representação gráfica de gerador.
+DGLI Leitura dos dados de representação gráfica de circuito CA.
+DGMO Leitura dos dados de representação gráfica de motor de indução.
+DGSH Leitura dos dados de representação gráfica de shunt de barra CA.
+DGSL Leitura dos dados de representação gráfica de shunt de circuito
+CA.
+DBTB Leitura dos dados de barra CA para o tabelador.
+DFTB Leitura dos dados de circuito CA para o tabelador.
+DPGE Leitura dos dados de potência ativa gerada para o tabelador.
+DQGE Leitura dos dados de potência reativa gerada para o tabelador.
+DBDR Leitura dos dados das Redes Básica, Complementar, Simulação e
+Supervisão
+DAVR Leitura dos dados de trechos para avaliação de corredores de
+recomposição.
+DLEN Leitura dos dados de limites de tensão para energização de
+circuitos.
+EXLF Execução do Programa de Fluxo de Potência.
+EXEQ Execução do Programa de Equivalente de Redes.
+EXCT Execução do Programa de Análise de Contingências.
+EXCA Execução do Programa de Análise Automática de Contingências de
+Circuito.
+EXCC Geração dos Dados de Plotagem da Curva de Capacidade de
+Geradores Individualizados.
+EXTG Execução da Transferência de Geração entre as Áreas Importadora
+e Exportadora.
+EXRS Execução da Avaliação de Segurança e da Geração da Região de
+Segurança.
+EXSB Execução do Programa de Análise de Sensibilidade de Tensão.
+EXOP Execução do Programa de Redespacho de Potência Ativa.
+EXOT Execução do Programa de Fluxo de Potência Ótimo (Flupot).
+EXIC Execução do Programa de Fluxo de Potência Continuado.
+EXQV Execução de Determinação das Curvas Q x V de barras do sistema.
+EXCG Execução da Solução Automática da Curva de Carga.
+EXMB Execução de Manobra em Barra CA (união ou separação).
+EXRA Execução da Renumeração de Barras de uma Área.
+EXRB Execução da Renumeração de Barras de uma Área.
+EXAR Execução da Análise Automática de Corredores de Recomposição.
+mk:@MSITStore:D:\Cepel\Anarede\V130000\Manuais\anarede.chm::/WordDocumen... 16/05/2026
+
+--- PAGE 3 ---
+Códigos de Execução Page 3 of 3
+EXT0 Execução do Programa ANAT0.
+EXVC Execução da substituição de caracteres inválidos nas identificações
+de Grupos Base e Limite de Tensão.
+EXT3 Execução da Identificação Automática de Transformadores de 3
+Enrolamentos.
+EXRC Execução do Programa para Definição das Redes Complementar e
+de Simulação.
+EQVR Execução da Determinação da Rede Equivalente após o uso do
+Código EXRC.
+RELA Emissão de relatórios e monitoração do sistema.
+CART Gravação dos dados de entrada em arquivo.
+ULOG Associação de unidades lógicas aos arquivos.
+LOGL Ativa a gravação de comandos no arquivo de log de comandos.
+LOGD Desativa a gravação de comandos no arquivo de log de comandos.
+CLOG Copiar o arquivo de log de comandos.
+ARQV Controle do arquivo de casos armazenados.
+FLOW Leitura de arquivo de casos armazenados formato FLOWINT.
+CASO Inicialização para estudo de um novo caso.
+DOS Ativação de um DOS Shell.
+CONC Alteração de configuração da cor de fundo do console de comandos
+DOS.
+COMP Execução do comparador de casos de arquivo histórico.
+DOSC Utilização de comandos DOS através do console de comandos DOS
+do Windows.
+DMSG Dados de mensagem de texto para ser exibida em uma caixa de
+mensagens padrão Windows.
+INFO Exibe informações sobre versão e direito de uso na versão DOS.
+PRES Geração de arquivos sequencias com dados de barras e circuitos
+com precisão estendida.
+EXRR Executa a renumeração e renomeia um conjunto de barras.
+DFRQ Leitura dos dados de freqüência para Regulação Primária..
+EXRT Executa a renumeração e renomeia trechos de recomposição.
+DEMT Leitura dos dados para estudos de Margem de Transmissão
+DGMT Leitura dos dados de gerações complementares para Margem de
+Transmissão
+EXMT Executa o cálculo automático da Margem de Transmissão
+FIM Término de execução.
+mk:@MSITStore:D:\Cepel\Anarede\V130000\Manuais\anarede.chm::/WordDocumen... 16/05/2026
