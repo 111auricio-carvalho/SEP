@@ -1,0 +1,109 @@
+TIPO
+P
+DBAR
+(NB  CEMA     BN               VBAS DISJUN DA1  DA2 DDMMAAAADDMMAAAA IA SA  F
+(----=-=-============          ---- ======-----=====--------======== ---=== -
+    1     BUS 01
+    2     BUS 02
+    3     BUS 03
+    4     BUS 04
+    5     BUS 05
+    6     BUS 06
+    7     BUS 07
+    8     BUS 08
+    9     BUS 09
+   10     BUS 10
+   11     BUS 11
+   12     BUS 12
+   13     BUS 13
+   14     BUS 14
+   15     BUS 15
+   16     BUS 16
+   17     BUS 17
+   18     BUS 18
+   19     BUS 19
+   20     BUS 20
+   21     BUS 21
+   22     BUS 22
+   23     BUS 23
+   24     BUS 24
+   25     BUS 25
+   26     BUS 26
+   27     BUS 27
+   28     BUS 28
+   29     BUS 29
+   30     GEN 30
+   31     GEN 31
+   32     GEN 32
+   33     GEN 33
+   34     GEN 34
+   35     GEN 35
+   36     GEN 36
+   37     GEN 37
+   38     GEN 38
+   39     GEN 39
+99999
+DCIR
+(BF  CE  BT   NCT  R1    X1    R0    X0    CN    S1   S0       TB  TCIA DEF  KM CD RNDE  XNDE CP RNPA  XNPA SA  EQ NunNop DJ_BF CicDJ_BT Cic D2F  D2T  D3F  D3T DDMMAAAADDMMAAAA   MVA              TD     NOME EXTENSO     F UOT AGS AGT TIP S
+(----=-=====  --=------======------======------=====-----     -----==---=== ====--======------==------======--- == ===--- ======---======---=====-----=====-----========-------- =======            == -------------------- - === --- === --- =
+    1      2   1L    35   411   105  1233LIN
+    1     39   1L    10   250    30   750LIN
+    2      3   1L    13   151    39   453LIN
+    2     25   1L    70    86   210   258LIN
+    3      4   1L    13   213    39   639LIN
+    3     18   1L    11   133    33   399LIN
+    4      5   1L     8   128    24   384LIN
+    4     14   1L     8   129    24   387LIN
+    5      6   1L     2    26     6    78LIN
+    5      8   1L     8   112    24   336LIN
+    6      7   1L     6    92    18   276LIN
+    6     11   1L     7    82    21   246LIN
+    7      8   1L     4    46    12   138LIN
+    8      9   1L    23   363    69  1089LIN
+    9     39   1L    10   250    30   750LIN
+   10     11   1L     4    43    12   129LIN
+   10     13   1L     4    43    12   129LIN
+   13     14   1L     9   101    27   303LIN
+   14     15   1L    18   217    54   651LIN
+   15     16   1L     9    94    27   282LIN
+   16     17   1L     7    89    21   267LIN
+   16     19   1L    16   195    48   585LIN
+   16     21   1L     8   135    24   405LIN
+   16     24   1L     3    59     9   177LIN
+   17     18   1L     7    82    21   246LIN
+   17     27   1L    13   173    39   519LIN
+   21     22   1L     8   140    24   420LIN
+   22     23   1L     6    96    18   288LIN
+   23     24   1L    22   350    66  1050LIN
+   25     26   1L    32   323    96   969LIN
+   26     27   1L    14   147    42   441LIN
+   26     28   1L    43   474   129  1422LIN
+   26     29   1L    57   625   171  1875LIN
+   28     29   1L    14   151    42   453LIN
+   12     11   1T    16   435    16   435TRF                                    YN            YN
+   12     13   1T    16   435    16   435TRF                                    YN            YN
+    6     31   1T         250         250TRF                                    YN            YN
+   10     32   1T         200         200TRF                                    YN            YN
+   19     33   1T     7   142     7   142TRF                                    YN            YN
+   20     34   1T     9   180     9   180TRF                                    YN            YN
+   22     35   1T         143         143TRF                                    YN            YN
+   23     36   1T     5   272     5   272TRF                                    YN            YN
+   25     37   1T     6   232     6   232TRF                                    YN            YN
+    2     30   1T         181         181TRF                                    YN            YN
+   29     38   1T     8   156     8   156TRF                                    YN            YN
+   19     20   1T     7   138     7   138TRF                                    YN            YN
+   30      0   1G         310         310GER                                    YN
+   31      0   1G         697         697GER                                    YN
+   32      0   1G         531         531GER                                    YN
+   33      0   1G         436         436GER                                    YN
+   34      0   1G        1320        1320GER                                    YN
+   35      0   1G         500         500GER                                    YN
+   36      0   1G         490         490GER                                    YN
+   37      0   1G         570         570GER                                    YN
+   38      0   1G         570         570GER                                    YN
+   39      0   1G          60          60GER                                    YN
+99999
+DARE
+(NN  C                            NOME                
+(--  =            ------------------------------------
+99999

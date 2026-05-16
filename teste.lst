@@ -1,0 +1,31 @@
+H -32 -45 112 141
+!      ---- Modo de Desenho da Barra ---
+BU
+!      ---- Tamanho da Fonte das Legendas ---
+F 1
+!      ---- Cores (Fundo - Identificador - Numero - Valor - Grid)---
+RF 255 255 255
+RI 128 0 128
+RN 128 0 128
+RV 0 0 255
+RG 0 0 0
+!      ---- Grupos Base de Tensão ----
+!Ten  lar  R   G   B ID
+G 0 1 0 0 0
+!    ---- Componentes ----
+!Numero Tipo Rot Hac Px Py Cor sl Descrip
+C 88  1 769 0      0    -16  1  0 0  1  0  0  0 0
+C 89  1 257 0     80    -16  1  0 0  2  0  0  0 0
+C 91  1 257 0     80     80  1  0 0 39  0  0  0 0
+!      ---- Linhas ----
+!Numero Tipo hac sl De Para nsg segmentos
+L90 14 0 0  88  89  1  1 51 
+L92 14 0 0  88  91  1  1 52 
+!     ---- Ligacoes ----
+!Numero Flags cor Inic Coni Fin Conf Linhas nqb quebras
+U51 0  1  88   2  89   2  90   0 
+U52 0  1  88   8  91   2  92   0 
+!    ---- Posição de Legenda de Componentes ----
+!NumCompo Label Rot Px Py
+!     ---- Posição de Legenda de Ligacoes ----
+!Lado NumLig Label Px Py
