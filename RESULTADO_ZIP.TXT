@@ -1,4 +1,4 @@
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   3
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   4
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO DE CONVERGENCIA
@@ -45,7 +45,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
  MONITORACAO DE FLUXOS CORRIGIDOS PELA TENSAO - MFCT
 
  Não foram encontradas violações de fluxo entre os circuitos monitorados
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   4
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   5
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO DE BARRAS CA DO SISTEMA * AREA   1 *                                     
@@ -95,7 +95,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
      37 GEN 37        1 1.028  -2.3   540.0     3.7     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
      38 GEN 38        1 1.027   2.3   830.0    12.6     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0 LIG
      39 GEN 39        1 1.030 -14.5  1000.0   101.0     0.0     0.0  1144.1   259.1     0.0     0.0     0.0     0.0     0.0     0.0 LIG
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   5
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   6
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -149,7 +149,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
                          9999.0  9999.0  9999.0        0.0%                     6 BUS 06        1  -445.9   -82.2   455.6                      1.24     7.71                    
                          9999.0  9999.0  9999.0        0.0%                     8 BUS 08        1   213.5    -1.3   214.5                      0.18    -5.60                    
   ...............................................................................................................................................................................
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   6
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   7
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -201,7 +201,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
                          9999.0  9999.0  9999.0        0.0%                    13 BUS 13        1  -329.0     1.3   325.6                      0.95    -6.92                    
                          9999.0  9999.0  9999.0        0.0%                    15 BUS 15        1    65.9   -44.1    78.4                      0.09   -36.47                    
   ...............................................................................................................................................................................
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   7
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   8
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -253,7 +253,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
                          9999.0  9999.0  9999.0        0.0%                    16 BUS 16        1   313.5   -27.9   305.2                      0.74   -14.62                    
                          9999.0  9999.0  9999.0        0.0%                    22 BUS 22        1  -598.0   -91.5   586.5                      2.73    20.07                    
   ...............................................................................................................................................................................
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   8
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   9
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -305,7 +305,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
                          9999.0  9999.0  9999.0        0.0%                    26 BUS 26        1   124.5   -52.1   128.2                      0.60   -79.81                    
                          9999.0  9999.0  9999.0        0.0%                    29 BUS 29        1  -343.7    30.1   327.8                      1.52   -11.21                    
   ...............................................................................................................................................................................
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   9
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.  10
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -355,7 +355,7 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
   GEN 37           -2.3     3.7     0.0     0.0         0.0     0.0     0.0                                          
                          9999.0  9999.0  9999.0        0.0%                    25 BUS 25        1   540.0     3.7   525.3                      1.66    64.02                    
   ...............................................................................................................................................................................
-CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.  10
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.  11
 
  IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P)                             
  RELATORIO COMPLETO DO SISTEMA * AREA   1 *                                     
@@ -461,4 +461,20 @@ Não foram encontradas violações de geracao entre as barras monitoradas.
      22 BUS 22           1        1000    0  B  0                                           1100 0                                         ADIC 
  *** AVISO INPBUS-0925 ***
  Numero da area em branco. A barra sera adicionada a area numero 001.
+
+CEPEL - CENTRO DE PESQUISAS DE ENERGIA ELETRICA - PROGRAMA DE ANALISE DE REDES - V13.00.00                                 PAG.   3
+
+ IEEE 39 BUS SYSTEM - ZIP LOAD MODEL (40Z, 40I, 20P) - CARGA 110%                
+ DADOS DE GERADORES INDIVIDUALIZADOS
+
+ X------------------X-------X-----X-----------X------X-----X-----X-----X------X-----X-----X-----X-------------X---X-------X----X-----X--X----X
+   BARRA GERADORA    UNIDADE PGER    QGERADO   TRANSF         DADOS DE MAQUINA             Fator Identificacao Un. Agrega- TIPO BARRA    MODO
+   NUM.     NOME     MIN MAX (MW)   ATUAL MAX   xtrf  xd(%)   xl   f.p.   PMEC  PMIN  EST. PART    Curva por   p/   dores   DA   DE       DE
+  GRUPO ESTADO\VRUOp     OPE ESPEC        MIN    (%)  xq(%)  (%)   SNOM   MAX.        R(%) PARTR    Pontos     TRF SIN T3E GER.  ALTA Nc OPER
+ X-----X------------X---X---X-----X-----------X------X-----X-----X-----X------X-----X-----X-----X-------------X---X---X---X----X-----X--X----X
+
+     39 GEN 39         1   1         0.0  9999          0.0   0.0   1.0 9999.    0.     0.    0.                 1                       GERA
+      1 LIG.    CALC       1             -9999          0.0              9999.                0.                                              ADIC 
+ *** AVISO INPGEI-0361 ***
+ Campos (NBA) e Nc em branco. Transformador do GEI nao sera atualizado automaticamente com o numero de unidades.
 

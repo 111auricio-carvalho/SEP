@@ -54,6 +54,8 @@ Dados corrigidos conforme o PDF:
 Observacao importante:
 
 - No caso ZIP/ZIP 110%, as cargas reportadas no resultado podem diferir dos valores nominais do `DBAR`, porque o `DCAR` altera a carga efetiva conforme a tensao.
+- Foi adicionado `DGEI` aos tres `.pwf`, com grupo 1 nas barras 30 a 39, para corresponder aos simbolos de gerador individualizado do `ieee39_base.lst`. O bloco usa modo automatico `S`.
+- Os campos `NBA/Nc` foram preenchidos somente nos GEIs que possuem transformador elevador explicito no `DLIN`: 30-2, 31-6, 32-10, 33-19, 34-20, 35-22, 36-23, 37-25 e 38-29, com `Nc=1`. A barra 39 ficou sem `NBA/Nc` porque no PDF/DLIN ela nao tem transformador elevador explicito; um eventual `INPGEI-0361` apenas para a barra 39 e esperado.
 
 ## Padrao PWF validado no ANAREDE V13
 

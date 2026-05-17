@@ -60,6 +60,8 @@ Os avisos `INPBUS-0925` apenas indicam area em branco; o ANAREDE adiciona as bar
 
 Observacao: apos a conferencia direta com `docs/simulacao_2026_1_texto.txt`, foram adicionadas as cargas das barras 31 e 39 que constam no PDF. Os tres casos foram rodados novamente no ANAREDE e os resultados foram reextraidos.
 
+Observacao sobre diagrama: foi adicionado bloco `DGEI` aos tres arquivos `.pwf`, com grupo 1 nas barras 30 a 39, para corresponder aos simbolos de gerador individualizado do `ieee39_base.lst`. O bloco usa modo automatico `S`. Os campos `NBA/Nc` foram preenchidos apenas para os geradores com transformador elevador explicito no `DLIN`: 30-2, 31-6, 32-10, 33-19, 34-20, 35-22, 36-23, 37-25 e 38-29, sempre com `Nc=1`. A barra 39 foi mantida sem `NBA/Nc`, pois no PDF/DLIN ela nao tem transformador elevador explicito; portanto, se o ANAREDE emitir um aviso `INPGEI-0361` somente para a barra 39, ele e esperado e evita vincular o GEI a uma linha comum.
+
 ## Conferencia com o enunciado
 
 O PDF `docs/simulaçao_2026_1 (1).pdf` pede:

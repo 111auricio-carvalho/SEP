@@ -96,6 +96,19 @@ DLIN
    29        38 1      .08  1.56      1.025
    19        20 1      .07  1.38      1.060
 99999
+DGEI
+(Bar)OM GrE Un UO UM Pg   Qg   Qn   Qm
+   30 AS  1 L  1  1  1                                                                                                              2  1
+   31 AS  1 L  1  1  1                                                                                                              6  1
+   32 AS  1 L  1  1  1                                                                                                             10  1
+   33 AS  1 L  1  1  1                                                                                                             19  1
+   34 AS  1 L  1  1  1                                                                                                             20  1
+   35 AS  1 L  1  1  1                                                                                                             22  1
+   36 AS  1 L  1  1  1                                                                                                             23  1
+   37 AS  1 L  1  1  1                                                                                                             25  1
+   38 AS  1 L  1  1  1                                                                                                             29  1
+   39 AS  1 L  1  1  1
+99999
 ULOG
 4
 resultado_base.txt

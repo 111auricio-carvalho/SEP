@@ -125,6 +125,10 @@ Os tres casos ANAREDE convergiram apos conferencia com o PDF:
 - `ieee39_zip.pwf`
 - `ieee39_zip_carga_110.pwf`
 
+Depois da validacao original, foi adicionado bloco `DGEI` aos tres `.pwf`, com grupo 1 nas barras 30 a 39, para corresponder aos simbolos de gerador individualizado do `ieee39_base.lst`. O bloco usa modo automatico `S`.
+
+Os campos `NBA/Nc` do `DGEI` foram preenchidos somente quando existe transformador elevador explicito no `DLIN`: 30-2, 31-6, 32-10, 33-19, 34-20, 35-22, 36-23, 37-25 e 38-29, todos com `Nc=1`. A barra 39 foi mantida sem `NBA/Nc`, pois no PDF/DLIN ela aparece conectada por linhas 1-39 e 9-39, sem transformador elevador dedicado. Assim, um eventual aviso `INPGEI-0361` apenas para a barra 39 e aceitavel e evita associar o GEI a uma linha comum.
+
 Resultados brutos:
 
 - `RESULTADO_BASE.TXT`
