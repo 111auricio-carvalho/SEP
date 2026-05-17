@@ -95,23 +95,61 @@ Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corr
 
 ## Proximos passos
 
-1. Rodar os arquivos ANAFAS:
-   - `ieee39_base.ana`: FT, FF, FFT e simetrica em todas as barras.
-   - `ieee39_falta_barra4.ana`: falta FT na barra 4.
-2. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
+1. Testar a leitura/simulacao no ANAFAS com os arquivos atuais:
+   - `ieee39_base.ana`: base de rede para niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
+   - `ieee39_base.lst`: desenho associado ao caso base.
+   - `ieee39_falta_barra4.ana`: caso/arquivo operacional para falta FT na barra 4, se ainda for mantido separado.
+2. Se o ANAFAS reclamar das barras, preencher explicitamente `VBAS=345` no bloco `DBAR` do `ieee39_base.ana`.
+3. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
 
-## Preparacao ANAFAS
+## Preparacao ANAFAS atual
 
-Os arquivos `.ana` usam a mesma topologia do caso ANAREDE validado.
+Os arquivos `.ana` e `.lst` foram atualizados para usar a mesma topologia do caso ANAREDE validado.
 
-Formato validado para a proxima tentativa:
+Estado atual do `ieee39_base.ana`:
 
-- Arquivo `.ana` e arquivo primario de rede, nao arquivo de comando de estudo.
-- Bloco `100`: base de potencia em MVA.
-- Bloco `38`: dados de barra.
-- Bloco `37`: dados de circuito, incluindo linhas, transformadores e geradores equivalentes ligados a barra de referencia `0`.
-- Os valores `R1`, `X1`, `R0` e `X0` do bloco `37` ficam em porcento na base do sistema, entao os dados em pu do PDF foram multiplicados por `100`.
-- A especificacao da falta FT na barra 4 deve ser feita no estudo/interativo do ANAFAS ou em arquivo batch/macro separado; ela nao fica misturada no arquivo primario de rede.
+- Usa o formato textual/secionado do ANAFAS: `TIPO`, `P`, `DBAR`, `DCIR` e `DARE`.
+- O bloco `DBAR` contem 39 barras, numeradas de 1 a 39.
+- O bloco `DCIR` contem 56 elementos:
+  - 34 linhas `1L`.
+  - 12 transformadores `1T`.
+  - 10 equivalentes de gerador `1G` ligados a barra de referencia `0`.
+- As impedancias `R1`, `X1`, `R0` e `X0` foram convertidas dos dados em pu para inteiros em escala `x100`.
+  - Exemplo: `0.35`, `4.11`, `1.05`, `12.33` viraram `35`, `411`, `105`, `1233`.
+- A topologia e os valores de impedancia foram conferidos contra a versao anterior de `ieee39_base.ana`.
+- Nao foram encontrados circuitos duplicados, barras faltantes ou referencias a barras inexistentes.
+
+Ponto de atencao no `ieee39_base.ana`:
+
+- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. O cabecalho preve o campo, e a versao antiga tinha `345`. Se o ANAFAS nao aceitar a base padrao/importada, preencher `345` em todas as barras antes de simular.
+- Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha um campo de tap evidente no formato `DCIR` usado no `.ana`. Para curto-circuito, a primeira tentativa sera com o arquivo atual.
+
+Estado atual do `ieee39_base.lst`:
+
+- O desenho contem 39 barras unicas.
+- Foram desenhados os 56 ramos representados no `ieee39_base.ana`.
+- Validacoes feitas:
+  - IDs `C`, `L` e `U` unicos.
+  - Sem barras faltantes ou duplicadas.
+  - Referencias `U -> C/L` validas.
+  - Segmentos `L -> U` validos.
+  - Sem ligacoes/ramos duplicados.
+  - Comparacao `.lst` x `.ana`: 56 conexoes no `.lst` e 56 no `.ana`, sem `missing` e sem `extra`.
+
+Como foi verificado:
+
+```powershell
+# Contagens basicas do .ana
+Select-String -Path ieee39_base.ana -Pattern '^\s*\d+\s+(BUS|GEN)' | Measure-Object
+Select-String -Path ieee39_base.ana -Pattern '^\s*\d+\s+\d+\s+1L' | Measure-Object
+Select-String -Path ieee39_base.ana -Pattern '^\s*\d+\s+\d+\s+1T' | Measure-Object
+Select-String -Path ieee39_base.ana -Pattern '^\s*\d+\s+0\s+1G' | Measure-Object
+
+# Contagens basicas do .lst
+Select-String -Path ieee39_base.lst -Pattern '^C' | Measure-Object
+Select-String -Path ieee39_base.lst -Pattern '^L' | Measure-Object
+Select-String -Path ieee39_base.lst -Pattern '^U' | Measure-Object
+```
 
 Mapeamento de maquinas usado nos circuitos equivalentes de gerador:
 

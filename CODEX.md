@@ -155,37 +155,60 @@ Extracao validada:
 
 ## Proximo passo
 
-Validar ANAFAS:
+Testar leitura/simulacao no ANAFAS:
 
 - `ieee39_base.ana`: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
+- `ieee39_base.lst`: desenho associado ao caso base.
 - `ieee39_falta_barra4.ana`: falta FT na barra 4, tensoes em todas as barras e corrente de falta.
 
-## ANAFAS - preparacao inicial
+## ANAFAS - estado atual
 
 Arquivos:
 
 - `ieee39_base.ana`: arquivo primario de rede ANAFAS.
+- `ieee39_base.lst`: desenho associado ao caso base.
 - `ieee39_falta_barra4.ana`: copia operacional do arquivo primario de rede ANAFAS para testar a falta FT na barra 4 pelo modo interativo.
 
-O ANAFAS nao leu os codigos textuais `DANA`, `DBAR`, `DLIN`, `DTRF`, `DMAC` e `DALT` quando o arquivo foi carregado como dados de rede. A mensagem `LEDATA 186 - Codigo de execucao nao implementado` indica que o arquivo primario de rede deve usar codigos numericos.
+O `ieee39_base.ana` atual usa o formato textual/secionado do ANAFAS:
 
-Formato usado na versao atual:
+- `TIPO`
+- `P`
+- `DBAR`
+- `DCIR`
+- `DARE`
 
-- `100`: base de potencia, com valor `100.0`.
-- `38`: barras.
-- `37`: circuitos.
-- `99999`: fim de bloco.
+Estado validado localmente:
 
-No bloco `37`, as impedancias sao em porcento na base do sistema. Portanto:
+- `DBAR`: 39 barras, sem faltantes e sem duplicadas.
+- `DCIR`: 56 elementos:
+  - 34 linhas `1L`.
+  - 12 transformadores `1T`.
+  - 10 equivalentes de gerador `1G` ligados a barra de referencia `0`.
+- Nao ha circuitos duplicados.
+- Nao ha referencia a barra inexistente.
+- Tipos e nomes batem: `1L/LIN`, `1T/TRF`, `1G/GER`.
+- `ieee39_base.lst` contem 39 barras unicas e representa as mesmas 56 conexoes do `.ana`.
+- No `.lst`, os IDs `C`, `L` e `U` sao unicos; referencias `U -> C/L` e segmentos `L -> U` foram conferidos.
+- Comparacao `.lst` x `.ana`: 56 conexoes no `.lst` e 56 no `.ana`, sem `missing` e sem `extra`.
+
+No `DCIR`, as impedancias foram convertidas para inteiros em escala `x100`:
 
 - `R% = Rpu * 100`
 - `X% = Xpu * 100`
+- `R0% = R0pu * 100`
+- `X0% = X0pu * 100`
 
-Linhas, transformadores e geradores foram todos representados no bloco `37`:
+Exemplo:
 
-- Tipo `L`: linhas.
-- Tipo `T`: transformadores.
-- Tipo `G`: geradores equivalentes ligados a barra de referencia `0`.
+```text
+0.35  4.11  1.05  12.33  ->  35  411  105  1233
+```
+
+Pontos de atencao:
+
+- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. A versao antiga tinha `345`; se o ANAFAS reclamar da base de tensao, preencher `345` em todas as barras.
+- Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha campo de tap evidente no formato `DCIR` usado no `.ana`.
+- A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou por arquivo batch/macro separado, nao dentro do arquivo primario de rede.
 
 O mapeamento de geradores foi alinhado com a tabela do PDF. O mapeamento correto e pelo `GenN` informado na tabela de barras:
 
@@ -205,5 +228,4 @@ Premissas ANAFAS ainda pendentes de validacao no programa:
 - O enunciado fornece `x'd`, mas nao fornece valores explicitos de sequencia negativa e zero para as maquinas; a versao atual usa `X1 = X2 = X0 = x'd`.
 - Para linhas, a sequencia positiva vem da tabela do PDF; a sequencia zero foi estimada como `R0 = 3R1`, `X0 = 3X1`, `B0 = B1/3`.
 - Para transformadores, a sequencia zero depende da ligacao dos enrolamentos. O arquivo atual ainda deve ser validado no ANAFAS e ajustado conforme as mensagens do programa.
-- A susceptancia de linha foi omitida na primeira tentativa ANAFAS para reduzir risco de erro de formato no bloco `37`; o curto-circuito inicial fica dominado pelas impedancias serie.
-- A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou por arquivo batch/macro separado, nao dentro do arquivo primario de rede.
+- A susceptancia de linha foi omitida na primeira tentativa ANAFAS para reduzir risco de erro de formato no `DCIR`; o curto-circuito inicial fica dominado pelas impedancias serie.

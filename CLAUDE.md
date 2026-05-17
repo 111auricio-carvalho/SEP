@@ -134,9 +134,10 @@ Extracao validada:
 
 ## Proximo passo
 
-Validar e rodar os casos ANAFAS:
+Rodar os casos ANAFAS com os arquivos atuais:
 
 - `ieee39_base.ana`: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
+- `ieee39_base.lst`: desenho associado ao caso base.
 - `ieee39_falta_barra4.ana`: falta FT na barra 4, com tensoes em todas as barras e corrente de falta.
 
 ## Estado ANAFAS
@@ -144,18 +145,37 @@ Validar e rodar os casos ANAFAS:
 Arquivos preparados:
 
 - `ieee39_base.ana`
+- `ieee39_base.lst`
 - `ieee39_falta_barra4.ana`
 
-Esses arquivos agora estao no formato de arquivo primario de rede ANAFAS:
+O `ieee39_base.ana` atual esta no formato textual/secionado do ANAFAS:
 
-- `100`: base `100.0 MVA`.
-- `38`: barras.
-- `37`: circuitos.
-- `99999`: fim de bloco.
+- `TIPO`
+- `P`
+- `DBAR`
+- `DCIR`
+- `DARE`
 
-O ANAFAS rejeitou a versao anterior com `DANA/DBAR/DLIN/DTRF/DMAC/DALT`, pois esses codigos textuais nao sao dados de rede primarios para o leitor `LEDATA`.
+Estado validado localmente:
 
-No bloco `37`, os dados de impedancia em pu do PDF foram convertidos para porcento na base do sistema (`pu * 100`). Linhas, transformadores e geradores foram representados como circuitos `L`, `T` e `G`; geradores ficam ligados a barra de referencia `0`.
+- `DBAR`: 39 barras, sem faltantes e sem duplicadas.
+- `DCIR`: 56 elementos:
+  - 34 linhas `1L`.
+  - 12 transformadores `1T`.
+  - 10 equivalentes de gerador `1G` ligados a barra de referencia `0`.
+- Nao ha circuitos duplicados.
+- Nao ha referencia a barra inexistente.
+- Tipos e nomes batem: `1L/LIN`, `1T/TRF`, `1G/GER`.
+- `ieee39_base.lst` representa as mesmas 56 conexoes do `.ana`, sem ramos extras ou faltantes.
+- No `.lst`, os IDs `C`, `L` e `U` sao unicos; as referencias `U -> C/L` e `L -> U` foram conferidas.
+
+Os dados de impedancia em pu do PDF foram convertidos para inteiros em escala `x100` no `DCIR`. Exemplo: `0.35`, `4.11`, `1.05`, `12.33` viraram `35`, `411`, `105`, `1233`.
+
+Pontos de atencao antes/depois da tentativa no ANAFAS:
+
+- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. A versao antiga tinha `345`; se o ANAFAS reclamar da base de tensao, preencher `345` em todas as barras.
+- Os taps dos transformadores estao no caso ANAREDE `.pwf`, mas nao ha campo de tap evidente no formato `DCIR` usado no `.ana`. A primeira tentativa ANAFAS sera com o arquivo atual.
+- A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou em arquivo batch/macro separado, nao misturada no arquivo primario de rede.
 
 Os circuitos de gerador foram corrigidos para mapear cada barra ao `GenN` do enunciado:
 
