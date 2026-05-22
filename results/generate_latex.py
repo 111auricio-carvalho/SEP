@@ -13,6 +13,13 @@ def read_csv(name):
         return list(csv.DictReader(f))
 
 
+def maybe_read_csv(name):
+    path = RESULTS / name
+    if not path.exists():
+        return []
+    return read_csv(name)
+
+
 def fmt(value, nd=3):
     try:
         return f"{float(value):.{nd}f}"
@@ -91,6 +98,9 @@ def build():
     zip110_zip_buses = read_csv("compare_zip110_vs_zip_buses.csv")
     zip_base_branches = read_csv("compare_zip_vs_base_branches.csv")
     zip110_zip_branches = read_csv("compare_zip110_vs_zip_branches.csv")
+    anafas_fault_levels = maybe_read_csv("anafas_base_fault_levels.csv")
+    anafas_ft4_summary = maybe_read_csv("anafas_ft_barra4_summary.csv")
+    anafas_ft4_voltages = maybe_read_csv("anafas_ft_barra4_voltages.csv")
 
     sections = []
     sections.append(table(
@@ -159,6 +169,43 @@ def build():
         size="\\tiny",
     ))
 
+    if anafas_fault_levels:
+        sections.append(table(
+            "Niveis de curto-circuito no caso base ANAFAS",
+            "tab:anafas-curtos-base",
+            ["Barra", "Nome", "FT (kA)", "FF (kA)", "FFT (kA)", "Simetrica (kA)"],
+            [
+                [r["bus"], r["name"], fmt(r["ft_ka"], 3), fmt(r["ff_ka"], 3),
+                 fmt(r["fft_ka"], 3), fmt(r["sim_ka"], 3)]
+                for r in anafas_fault_levels
+            ],
+            align="rlrrrr",
+        ))
+
+    if anafas_ft4_summary:
+        r = anafas_ft4_summary[0]
+        sections.append(table(
+            "Corrente de falta FT na barra 4",
+            "tab:anafas-ft4-corrente",
+            ["Falta", "Barra", "Nome", "Corrente de falta (kA)", "Barras com tensao no relatorio"],
+            [[r["fault"], r["bus"], r["name"], fmt(r["fault_current_ka"], 3), r["voltage_buses_reported"]]],
+            align="crlrr",
+            size="\\small",
+        ))
+
+    if anafas_ft4_voltages:
+        sections.append(table(
+            "Tensoes reportadas para a falta FT na barra 4",
+            "tab:anafas-ft4-tensoes",
+            ["Barra", "Nome", "Va (pu)", "Ang. A", "Vb (pu)", "Ang. B", "Vc (pu)", "Ang. C"],
+            [
+                [r["bus"], r["name"], fmt(r["va_pu"], 3), fmt(r["anga_deg"], 1),
+                 fmt(r["vb_pu"], 3), fmt(r["angb_deg"], 1), fmt(r["vc_pu"], 3), fmt(r["angc_deg"], 1)]
+                for r in anafas_ft4_voltages
+            ],
+            align="rlrrrrrr",
+        ))
+
     tex = r"""\documentclass[12pt]{classe_uftex/uftex}
 \usepackage{longtable}
 \usepackage{pdflscape}
@@ -169,7 +216,7 @@ def build():
 \chapter*{Relatorio de Tabelas de Resultados}
 \addcontentsline{toc}{chapter}{Relatorio de Tabelas de Resultados}
 
-Este relatorio apresenta apenas as tabelas extraidas dos resultados do ANAREDE para o sistema IEEE 39 barras.
+Este relatorio apresenta apenas as tabelas extraidas dos resultados do ANAREDE e ANAFAS para o sistema IEEE 39 barras.
 
 """ + "\n\n".join(sections) + "\n\n\\end{document}\n"
     (LATEX / "relatorio_tabelas.tex").write_text(tex, encoding="utf-8")
