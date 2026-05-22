@@ -212,7 +212,8 @@ def build():
 \usepackage{array}
 
 \begin{document}
-\mainmatter
+\pagestyle{plain}
+\pagenumbering{arabic}
 \chapter*{Relatorio de Tabelas de Resultados}
 \addcontentsline{toc}{chapter}{Relatorio de Tabelas de Resultados}
 
