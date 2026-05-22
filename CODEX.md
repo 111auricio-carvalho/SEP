@@ -236,3 +236,24 @@ Premissas ANAFAS ainda pendentes de validacao no programa:
 - Para linhas, a sequencia positiva vem da tabela do PDF; a sequencia zero foi estimada como `R0 = 4R1`, `X0 = 4X1`, `B0 = B1/4`.
 - Para transformadores, a sequencia zero depende da ligacao dos enrolamentos. O arquivo atual ainda deve ser validado no ANAFAS e ajustado conforme as mensagens do programa.
 - A susceptancia de linha foi omitida na primeira tentativa ANAFAS para reduzir risco de erro de formato no `DCIR`; o curto-circuito inicial fica dominado pelas impedancias serie.
+
+
+                                                                                                                                        
+  Como Validar                                                                                                                            
+                                                                                                                                          
+  1. ANAREDE convergiu.                                                                                                                   
+     O caso base, ZIP e ZIP 110% têm solução de fluxo de potência convergida. Isso valida numericamente os resultados de tensão, ângulo,  
+     fluxo e perdas.                                                                                                                      
+  2. Tensões ficaram em faixa plausível.                                                                                                  
+     No IEEE 39 barras, tensões próximas de 1.0 pu são esperadas. Quedas maiores aparecem com aumento de carga, especialmente em barras   
+     mais carregadas ou eletricamente distantes.                                                                                          
+  3. ZIP vs. base muda pouco.                                                                                                             
+     Isso é esperado porque o modelo ZIP ajusta a carga conforme a tensão. Como as tensões ficaram próximas de 1 pu, a diferença entre    
+     carga potência constante e ZIP 40Z/40I/20P tende a ser pequena.                                                                      
+  4. ZIP 110% muda mais.                                                                                                                  
+     Aumentar carga em 10% aumenta corrente nos ramos, aumenta perdas e tende a reduzir tensões. Isso deve aparecer nas tabelas.          
+  5. ANAFAS base gerou todos os tipos de curto.                                                                                           
+     A tabela com FT, FF, FFT e simétrica para 39 barras atende à Tabela 3 do enunciado.                                                  
+  6. Falta FT na barra 4.                                                                                                                 
+     A corrente de falta ficou 6.370 kA. A tensão da fase A na barra 4 vai a 0 pu, o que é exatamente esperado numa falta fase-terra      
+     franca na fase A.

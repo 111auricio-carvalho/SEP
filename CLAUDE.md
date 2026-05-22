@@ -192,3 +192,23 @@ Os circuitos de gerador foram corrigidos para mapear cada barra ao `GenN` do enu
 - 39/Gen1: `0.0060`
 
 Premissa registrada: como o PDF fornece `x'd`, mas nao traz todos os dados de sequencia negativa/zero, os arquivos usam `X1 = X2 = X0 = x'd` para a primeira validacao no ANAFAS.
+
+
+                                                                                                                                        
+  Como Validar                                                                                                                            
+                                                                                                                                          
+  1. ANAREDE convergiu.                                                                                                                   
+     O caso base, ZIP e ZIP 110% têm solução de fluxo de potência convergida. Isso valida numericamente os resultados de tensão, ângulo,  
+     fluxo e perdas.                                                                                                                      
+  2. Tensões ficaram em faixa plausível.                                                                                                  
+     No IEEE 39 barras, tensões próximas de 1.0 pu são esperadas. Quedas maiores aparecem com aumento de carga, especialmente em barras   
+     mais carregadas ou eletricamente distantes.                                                                                          
+  3. ZIP vs. base muda pouco.                                                                                                             
+     Isso é esperado porque o modelo ZIP ajusta a carga conforme a tensão. Como as tensões ficaram próximas de 1 pu, a diferença entre    
+     carga potência constante e ZIP 40Z/40I/20P tende a ser pequena.                                                                      
+  4. ZIP 110% muda mais.                                                                                                                  
+     Aumentar carga em 10% aumenta corrente nos ramos, aumenta perdas e tende a reduzir tensões. Isso deve aparecer nas tabelas.          
+  5. ANAFAS base gerou todos os tipos de curto.                                                                                           
+     A tabela com FT, FF, FFT e simétrica para 39 barras atende à Tabela 3 do enunciado.                                                  
+  6. Falta FT na barra 4.A corrente de falta ficou 6.370 kA. A tensão da fase A na barra 4 vai a 0 pu, o que é exatamente esperado numa falta fase-terra      
+     franca na fase A.
