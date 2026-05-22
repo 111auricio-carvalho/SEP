@@ -121,13 +121,12 @@ CSVs e tabelas:
 - `results/compare_zip_vs_base_branches.csv`
 - `results/compare_zip110_vs_zip_buses.csv`
 - `results/compare_zip110_vs_zip_branches.csv`
-- `results/relatorio_resumo.md`
-- `results/relatorio_tabelas.md`
+- `results/latex/relatorio_tabelas.tex`
 
 Scripts:
 
 - `results/extract_results.py`: extrai barras e ramos dos TXT do ANAREDE.
-- `results/generate_reports.py`: gera tabelas Markdown e resumo.
+- `results/generate_latex.py`: gera relatorio LaTeX simples com tabelas, usando a classe UFTeX.
 
 Extracao validada:
 
@@ -175,7 +174,7 @@ Os dados de impedancia em pu do PDF foram convertidos para inteiros em escala `x
 
 Pontos de atencao antes/depois da tentativa no ANAFAS:
 
-- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. A versao antiga tinha `345`; se o ANAFAS reclamar da base de tensao, preencher `345` em todas as barras.
+- O campo `VBAS` do `DBAR` foi preenchido com `345 kV` nas 39 barras, coerente com a representacao usual do IEEE 39 barras como sistema New England 345 kV e com o arquivo especifico `ieee39_falta_barra4.ana`.
 - Os taps dos transformadores estao no caso ANAREDE `.pwf`, mas nao ha campo de tap evidente no formato `DCIR` usado no `.ana`. A primeira tentativa ANAFAS sera com o arquivo atual.
 - A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou em arquivo batch/macro separado, nao misturada no arquivo primario de rede.
 

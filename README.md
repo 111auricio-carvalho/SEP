@@ -14,9 +14,8 @@ Arquivos de entrada para o trabalho de Sistemas Eletricos de Potencia usando ANA
 ## Organizacao da pasta
 
 - Raiz: arquivos finais de simulacao e documentacao curta.
-- `archive/`: copias antigas preservadas para rastreabilidade.
 - `docs/`: PDFs de enunciado, comandos e codigos de execucao.
-- `results/`: relatorios gerados pelo ANAREDE e tabelas CSV extraidas.
+- `results/`: CSVs extraidos dos relatorios ANAREDE e relatorio LaTeX com tabelas.
 - `tools/`: instaladores e utilitarios auxiliares.
 
 ## Padrao ANAREDE V13 validado
@@ -101,8 +100,7 @@ Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corr
    - `ieee39_base.ana`: base de rede para niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
    - `ieee39_base.lst`: desenho associado ao caso base.
    - `ieee39_falta_barra4.ana`: caso/arquivo operacional para falta FT na barra 4, se ainda for mantido separado.
-2. Se o ANAFAS reclamar das barras, preencher explicitamente `VBAS=345` no bloco `DBAR` do `ieee39_base.ana`.
-3. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
+2. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
 
 ## Preparacao ANAFAS atual
 
@@ -123,7 +121,7 @@ Estado atual do `ieee39_base.ana`:
 
 Ponto de atencao no `ieee39_base.ana`:
 
-- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. O cabecalho preve o campo, e a versao antiga tinha `345`. Se o ANAFAS nao aceitar a base padrao/importada, preencher `345` em todas as barras antes de simular.
+- O campo `VBAS` do `DBAR` foi preenchido com `345 kV` nas 39 barras, coerente com a representacao usual do IEEE 39 barras como sistema New England 345 kV e com o arquivo especifico `ieee39_falta_barra4.ana`.
 - Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha um campo de tap evidente no formato `DCIR` usado no `.ana`. Para curto-circuito, a primeira tentativa sera com o arquivo atual.
 
 Estado atual do `ieee39_base.lst`:
@@ -186,8 +184,18 @@ Arquivos principais:
 - `results/compare_zip_vs_base_branches.csv`
 - `results/compare_zip110_vs_zip_buses.csv`
 - `results/compare_zip110_vs_zip_branches.csv`
-- `results/relatorio_resumo.md`
-- `results/relatorio_tabelas.md`
+- `results/latex/relatorio_tabelas.tex`
+- `results/latex/classe_uftex/uftex.cls`
+- `results/latex/classe_uftex/logouft.pdf`
+
+Para regerar as tabelas e o relatorio LaTeX:
+
+```powershell
+python .\results\extract_results.py
+python .\results\generate_latex.py
+```
+
+O relatorio usa a classe UFTeX copiada de `https://github.com/UFTeX/UFTeX.git` para `results/latex/classe_uftex/`.
 
 Extracao validada:
 

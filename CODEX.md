@@ -141,16 +141,19 @@ Depois de rodar os PWFs no ANAREDE:
 
 ```powershell
 python .\results\extract_results.py
-python .\results\generate_reports.py
+python .\results\generate_latex.py
 ```
 
 O extrator mantem a ultima ocorrencia de cada barra e ramo. Isso evita duplicacao quando o ANAREDE concatena mais de uma execucao no mesmo TXT.
 
 Saidas principais:
 
-- `results/relatorio_resumo.md`
-- `results/relatorio_tabelas.md`
+- `results/latex/relatorio_tabelas.tex`
+- `results/latex/classe_uftex/uftex.cls`
+- `results/latex/classe_uftex/logouft.pdf`
 - CSVs de barras, ramos e comparacoes em `results/`
+
+O relatorio LaTeX usa os arquivos minimos da classe UFTeX copiados de `https://github.com/UFTeX/UFTeX.git`.
 
 Extracao validada:
 
@@ -210,7 +213,7 @@ Exemplo:
 
 Pontos de atencao:
 
-- O campo `VBAS` do `DBAR` esta vazio nas 39 barras. A versao antiga tinha `345`; se o ANAFAS reclamar da base de tensao, preencher `345` em todas as barras.
+- O campo `VBAS` do `DBAR` foi preenchido com `345 kV` nas 39 barras, coerente com a representacao usual do IEEE 39 barras como sistema New England 345 kV e com o arquivo especifico `ieee39_falta_barra4.ana`.
 - Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha campo de tap evidente no formato `DCIR` usado no `.ana`.
 - A falta FT na barra 4 deve ser configurada no estudo do ANAFAS ou por arquivo batch/macro separado, nao dentro do arquivo primario de rede.
 
@@ -230,6 +233,6 @@ O mapeamento de geradores foi alinhado com a tabela do PDF. O mapeamento correto
 Premissas ANAFAS ainda pendentes de validacao no programa:
 
 - O enunciado fornece `x'd`, mas nao fornece valores explicitos de sequencia negativa e zero para as maquinas; a versao atual usa `X1 = X2 = X0 = x'd`.
-- Para linhas, a sequencia positiva vem da tabela do PDF; a sequencia zero foi estimada como `R0 = 3R1`, `X0 = 3X1`, `B0 = B1/3`.
+- Para linhas, a sequencia positiva vem da tabela do PDF; a sequencia zero foi estimada como `R0 = 4R1`, `X0 = 4X1`, `B0 = B1/4`.
 - Para transformadores, a sequencia zero depende da ligacao dos enrolamentos. O arquivo atual ainda deve ser validado no ANAFAS e ajustado conforme as mensagens do programa.
 - A susceptancia de linha foi omitida na primeira tentativa ANAFAS para reduzir risco de erro de formato no `DCIR`; o curto-circuito inicial fica dominado pelas impedancias serie.
