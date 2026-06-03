@@ -1,0 +1,792 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{uftblue}{RGB}{0,76,153}
+\definecolor{uftgreen}{RGB}{0,128,96}
+\definecolor{uftred}{RGB}{180,55,55}
+\definecolor{softgray}{RGB}{245,247,250}
+
+\setbeamercolor{structure}{fg=uftblue}
+\setbeamercolor{frametitle}{fg=white,bg=uftblue}
+\setbeamercolor{title}{fg=white,bg=uftblue}
+\setbeamercolor{block title}{fg=white,bg=uftblue}
+\setbeamercolor{block body}{bg=softgray}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{uftblue}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{uftgreen}$\bullet$}
+
+\title[Modelo ZIP no ANAREDE]{Análise de Fluxo de Potência com Modelagem ZIP de Carga}
+\subtitle{Interpretação dos resultados no ANAREDE com base na teoria de SEP}
+\author{Sistema IEEE 39 barras}
+\institute{Sistemas Elétricos de Potência}
+\date{\today}
+
+\newcommand{\casobase}{Caso Base}
+\newcommand{\casozip}{Caso ZIP}
+\newcommand{\casozipcento}{Caso ZIP 110\%}
+\newcommand{\pu}{p.u.}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\section{Objetivo e Contexto}
+
+\begin{frame}{Objetivo da Apresentação}
+  \begin{block}{Objetivo geral}
+    Apresentar como a modelagem ZIP de carga altera os resultados de fluxo de potência no ANAREDE.
+  \end{block}
+
+  \vspace{0.3cm}
+  A análise compara três condições de operação:
+
+  \begin{itemize}
+    \item \textbf{\casobase}: caso de referência, com cargas representadas no modelo convencional.
+    \item \textbf{\casozip}: caso com cargas representadas por modelo dependente da tensão.
+    \item \textbf{\casozipcento}: cenário adicional com alteração no carregamento ZIP.
+  \end{itemize}
+
+  \vspace{0.2cm}
+  A comparação será feita por tensões, ângulos, fluxos ativos e reativos, geração, carga e perdas.
+\end{frame}
+
+\begin{frame}{Base Teórica Utilizada}
+  A fundamentação vem do capítulo de fluxo de potência e da seção de modelagem de carga do material da disciplina:
+
+  \begin{block}{Material de referência}
+    \texttt{docs/material\_agrupado\_sep2 (1).pdf}
+  \end{block}
+
+  O material apresenta que o fluxo de potência fornece:
+
+  \begin{itemize}
+    \item tensões e ângulos nas barras;
+    \item potências ativa e reativa nos ramos;
+    \item perdas elétricas;
+    \item condição de operação do sistema em regime permanente.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Por que Fazer Fluxo de Potência?}
+  O fluxo de potência é o primeiro estudo operacional de um SEP porque estabelece o balanço entre geração, carga e perdas.
+
+  \vspace{0.25cm}
+  Com ele é possível responder:
+
+  \begin{itemize}
+    \item as tensões estão dentro de uma faixa aceitável?
+    \item quais linhas e transformadores estão mais carregados?
+    \item qual é o sentido do fluxo de potência?
+    \item quais são as perdas elétricas do sistema?
+    \item como o sistema reage a mudanças na carga?
+  \end{itemize}
+
+  \vspace{0.25cm}
+  Nesta apresentação, o foco é a resposta do sistema quando a carga deixa de ser tratada como puramente constante.
+\end{frame}
+
+\section{Teoria do Fluxo de Potência}
+
+\begin{frame}{Grandezas Calculadas no Fluxo}
+  Em uma rede elétrica, o fluxo de potência calcula as variáveis de regime permanente.
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Barras}
+        \begin{itemize}
+          \item módulo da tensão: $|V|$;
+          \item ângulo da tensão: $\theta$;
+          \item potência gerada: $P_G$, $Q_G$;
+          \item potência consumida: $P_L$, $Q_L$.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Ramos}
+        \begin{itemize}
+          \item fluxo ativo: $P_{km}$;
+          \item fluxo reativo: $Q_{km}$;
+          \item perdas ativas;
+          \item redistribuição de carregamento.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Natureza Não Linear do Problema}
+  O fluxo de potência é um problema não linear porque potência depende do produto entre tensão e corrente:
+
+  \[
+    S = P + jQ = V I^{*}
+  \]
+
+  A corrente depende da rede:
+
+  \[
+    I = Y_{\text{bus}} V
+  \]
+
+  Logo, as potências injetadas nas barras dependem das magnitudes e dos ângulos das tensões.
+
+  \begin{block}{Consequência prática}
+    Mudanças na carga, nos taps, na compensação reativa ou na topologia alteram as tensões, os ângulos, os fluxos e as perdas.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Tipos de Barra no Fluxo}
+  No estudo de fluxo de potência, as barras são classificadas conforme as grandezas conhecidas.
+
+  \begin{table}
+    \centering
+    \begin{tabular}{lll}
+      \toprule
+      Tipo de barra & Dados conhecidos & Dados calculados \\
+      \midrule
+      PQ & $P$ e $Q$ & $|V|$ e $\theta$ \\
+      PV & $P$ e $|V|$ & $Q$ e $\theta$ \\
+      Referência & $|V|$ e $\theta$ & $P$ e $Q$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.2cm}
+  No ANAREDE, essa classificação permite resolver a rede e determinar o estado operativo do sistema.
+\end{frame}
+
+\section{Modelagem ZIP de Carga}
+
+\begin{frame}{Motivação para o Modelo ZIP}
+  A carga real de uma barra não depende apenas do valor nominal em MW e MVAr.
+
+  \vspace{0.25cm}
+  Segundo a teoria da modelagem de carga, a demanda também depende da tensão aplicada:
+
+  \[
+    P = f(P_0,V)
+    \qquad
+    Q = f(Q_0,V)
+  \]
+
+  \begin{block}{Ideia central}
+    Quando a tensão se afasta de $1{,}0$ \pu, a potência consumida por certos tipos de carga também muda.
+  \end{block}
+
+  Isso é relevante porque quedas ou elevações de tensão podem alterar o carregamento efetivo do sistema.
+\end{frame}
+
+\begin{frame}{As Três Parcelas do Modelo ZIP}
+  O nome ZIP vem das três formas de comportamento da carga:
+
+  \begin{table}
+    \centering
+    \begin{tabular}{lll}
+      \toprule
+      Parcela & Comportamento & Relação com a tensão \\
+      \midrule
+      Z & Impedância constante & $P,Q \propto V^2$ \\
+      I & Corrente constante & $P,Q \propto V$ \\
+      P & Potência constante & $P,Q =$ constante \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.2cm}
+  Assim, uma mesma barra pode ter parte da carga sensível ao quadrado da tensão, parte sensível linearmente e parte independente da tensão.
+\end{frame}
+
+\begin{frame}{Equação da Potência Ativa no ZIP}
+  Para a potência ativa, o modelo ZIP pode ser escrito como:
+
+  \[
+    P = P_0 \left[
+      k_{pp}
+      + k_{pi}\left(\frac{V}{V_0}\right)
+      + k_{pz}\left(\frac{V}{V_0}\right)^2
+    \right]
+  \]
+
+  com:
+
+  \[
+    k_{pz} + k_{pi} + k_{pp} = 1
+  \]
+
+  \begin{block}{Interpretação}
+    Se a tensão cai, as parcelas Z e I tendem a reduzir a potência ativa efetiva. A parcela P mantém a potência constante.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Equação da Potência Reativa no ZIP}
+  A mesma lógica é aplicada à potência reativa:
+
+  \[
+    Q = Q_0 \left[
+      k_{qp}
+      + k_{qi}\left(\frac{V}{V_0}\right)
+      + k_{qz}\left(\frac{V}{V_0}\right)^2
+    \right]
+  \]
+
+  com:
+
+  \[
+    k_{qz} + k_{qi} + k_{qp} = 1
+  \]
+
+  \begin{block}{Importância no SEP}
+    A potência reativa influencia diretamente o perfil de tensão. Por isso, alterações em $Q$ podem aparecer como quedas ou elevações de tensão nas barras.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Efeito Esperado da Modelagem ZIP}
+  Com o modelo ZIP, espera-se que:
+
+  \begin{itemize}
+    \item barras com tensão menor que $1{,}0$ \pu{} tenham redução nas parcelas Z e I da carga;
+    \item barras com tensão maior que $1{,}0$ \pu{} tenham aumento nas parcelas Z e I da carga;
+    \item a distribuição dos fluxos mude, pois as cargas efetivas mudam por barra;
+    \item as perdas mudem, porque dependem da circulação de corrente nos ramos.
+  \end{itemize}
+
+  \begin{block}{Ponto-chave}
+    A modelagem ZIP não é apenas uma alteração de entrada: ela muda o comportamento elétrico do sistema resolvido pelo fluxo de potência.
+  \end{block}
+\end{frame}
+
+\section{Metodologia}
+
+\begin{frame}{Sistema e Ferramenta}
+  A simulação foi realizada no ANAREDE, considerando o sistema IEEE 39 barras.
+
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Sistema}
+        \begin{itemize}
+          \item 39 barras;
+          \item ramos de transmissão;
+          \item barras de carga;
+          \item barras de geração;
+          \item barra de referência.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Cenários}
+        \begin{itemize}
+          \item \casobase;
+          \item \casozip;
+          \item \casozipcento.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Sequência da Análise}
+  A metodologia usada na comparação foi:
+
+  \begin{enumerate}
+    \item Executar o fluxo de potência do \casobase.
+    \item Executar o fluxo de potência do \casozip.
+    \item Executar o fluxo de potência do \casozipcento.
+    \item Extrair tensões, ângulos, cargas, gerações, fluxos e perdas.
+    \item Comparar:
+      \begin{itemize}
+        \item \casobase{} $\times$ \casozip;
+        \item \casozip{} $\times$ \casozipcento.
+      \end{itemize}
+  \end{enumerate}
+
+  \vspace{0.15cm}
+  A análise considera variações em \pu, graus, MW e MVAr.
+\end{frame}
+
+\begin{frame}{Observação Sobre o Aviso do Diagrama}
+  Ao carregar alguns diagramas dos casos ZIP, apareceu aviso de diferença no grupo base:
+
+  \begin{block}{Aviso do ANAREDE}
+    O grupo base do diagrama indicava 345 kV, enquanto o caso indicava 0 kV para o mesmo identificador.
+  \end{block}
+
+  Esse aviso está associado à importação gráfica do diagrama.
+
+  \begin{itemize}
+    \item Não altera diretamente o cálculo numérico do fluxo de potência.
+    \item Pode alterar atributos gráficos do diagrama.
+    \item A interpretação dos resultados deve usar as tabelas e relatórios do fluxo, não a aparência do desenho.
+  \end{itemize}
+\end{frame}
+
+\section{Resultados Globais}
+
+\begin{frame}{Resumo Global dos Casos}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrrr}
+      \toprule
+      Caso & $P_L$ (MW) & $Q_L$ (MVAr) & $P_G$ (MW) & Perdas (MW) \\
+      \midrule
+      Base & 6097,1 & 1406,0 & 6140,7 & 43,61 \\
+      ZIP & 6270,3 & 1433,9 & 6312,3 & 42,13 \\
+      ZIP 110\% & 5768,9 & 1532,4 & 5822,0 & 53,04 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.15cm}
+  \begin{block}{Leitura dos números}
+    O caso ZIP elevou a carga ativa efetiva em relação ao caso base. No cenário ZIP 110\%, a potência reativa efetiva e as perdas aumentaram, mas a carga ativa total extraída ficou menor nos resultados disponíveis.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Faixa de Tensões e Ângulos}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrrr}
+      \toprule
+      Caso & $V_{\min}$ (\pu) & $V_{\max}$ (\pu) & $\theta_{\min}$ & $\theta_{\max}$ \\
+      \midrule
+      Base & 0,982 & 1,064 & -10,6$^\circ$ & 8,3$^\circ$ \\
+      ZIP & 0,982 & 1,064 & -14,5$^\circ$ & 3,6$^\circ$ \\
+      ZIP 110\% & 0,964 & 1,064 & -4,9$^\circ$ & 13,9$^\circ$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.15cm}
+  \begin{itemize}
+    \item O caso ZIP manteve praticamente a mesma faixa de tensão do caso base.
+    \item O ZIP 110\% apresentou menor tensão mínima: 0,964 \pu{} na barra 39.
+    \item Os ângulos mudaram de forma mais expressiva que as tensões.
+  \end{itemize}
+\end{frame}
+
+\section{Comparação Base x ZIP}
+
+\begin{frame}{Base x ZIP: Tensão nas Barras}
+  A alteração do modelo convencional para o modelo ZIP gerou variações pequenas no módulo das tensões.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Barra & $V_{\text{Base}}$ & $V_{\text{ZIP}}$ & $\Delta V$ \\
+      \midrule
+      5 & 1,006 & 1,003 & -0,003 \\
+      6 & 1,008 & 1,006 & -0,002 \\
+      7 & 0,997 & 0,995 & -0,002 \\
+      8 & 0,996 & 0,994 & -0,002 \\
+      11 & 1,013 & 1,011 & -0,002 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    O perfil de tensão permaneceu estável. A maior diferença foi de apenas 0,003 \pu, indicando que a rede manteve boa regulação de tensão nesse cenário.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Base x ZIP: Ângulos das Barras}
+  Apesar das pequenas mudanças de tensão, os ângulos apresentaram deslocamentos maiores.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Barra & $\theta_{\text{Base}}$ & $\theta_{\text{ZIP}}$ & $\Delta\theta$ \\
+      \midrule
+      29 & 0,7$^\circ$ & -4,8$^\circ$ & -5,5$^\circ$ \\
+      28 & -2,1$^\circ$ & -7,5$^\circ$ & -5,4$^\circ$ \\
+      38 & 7,7$^\circ$ & 2,3$^\circ$ & -5,4$^\circ$ \\
+      26 & -5,5$^\circ$ & -10,6$^\circ$ & -5,1$^\circ$ \\
+      27 & -7,5$^\circ$ & -12,4$^\circ$ & -4,9$^\circ$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    A alteração angular mostra que a rede precisou redistribuir os fluxos de potência ativa para atender o novo comportamento das cargas.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Base x ZIP: Fluxos Ativos nos Ramos}
+  Os maiores impactos apareceram nos fluxos ativos dos ramos.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Ramo & $P_{\text{Base}}$ (MW) & $P_{\text{ZIP}}$ (MW) & $\Delta P$ (MW) \\
+      \midrule
+      6--31 & -511,5 & -683,3 & -171,8 \\
+      5--6 & -454,3 & -546,5 & -92,2 \\
+      4--5 & -136,9 & -216,8 & -79,9 \\
+      3--4 & 93,0 & 22,4 & -70,6 \\
+      14--15 & 5,1 & 65,9 & 60,8 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    Mesmo com pequena variação de tensão, a composição ZIP modificou a carga efetiva por barra e alterou a circulação de potência ativa.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Base x ZIP: Perdas}
+  A perda ativa total passou de:
+
+  \[
+    43{,}61\ \text{MW} \quad \rightarrow \quad 42{,}13\ \text{MW}
+  \]
+
+  Portanto:
+
+  \[
+    \Delta P_{\text{perdas}} = -1{,}48\ \text{MW}
+  \]
+
+  \begin{block}{Interpretação}
+    No caso ZIP, a redistribuição dos fluxos reduziu ligeiramente as perdas totais, apesar do aumento da carga ativa total efetiva.
+  \end{block}
+
+  \vspace{0.15cm}
+  Isso mostra que perdas não dependem apenas da carga total, mas também de onde a carga está localizada e por quais caminhos a potência circula.
+\end{frame}
+
+\begin{frame}{Base x ZIP: Conclusão Parcial}
+  \begin{itemize}
+    \item A troca para o modelo ZIP quase não alterou a faixa de tensão.
+    \item Os ângulos mudaram de forma mais relevante.
+    \item Os fluxos ativos foram redistribuídos em diversos ramos.
+    \item As perdas totais tiveram leve redução.
+  \end{itemize}
+
+  \begin{block}{Síntese}
+    O modelo ZIP não causou problema de tensão no sistema, mas alterou a forma como a potência se distribui pela rede.
+  \end{block}
+\end{frame}
+
+\section{Comparação ZIP x ZIP 110\%}
+
+\begin{frame}{ZIP x ZIP 110\%: Tensão nas Barras}
+  No cenário ZIP 110\%, apareceram quedas de tensão mais significativas.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Barra & $V_{\text{ZIP}}$ & $V_{\text{ZIP 110\%}}$ & $\Delta V$ \\
+      \midrule
+      39 & 1,030 & 0,964 & -0,066 \\
+      9 & 1,027 & 0,968 & -0,059 \\
+      1 & 1,048 & 1,000 & -0,048 \\
+      8 & 0,994 & 0,969 & -0,025 \\
+      7 & 0,995 & 0,973 & -0,022 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    A barra 39 se tornou o ponto mais crítico em tensão, atingindo 0,964 \pu.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP x ZIP 110\%: Ângulos}
+  A alteração do cenário ZIP também deslocou fortemente os ângulos.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Barra & $\theta_{\text{ZIP}}$ & $\theta_{\text{ZIP 110\%}}$ & $\Delta\theta$ \\
+      \midrule
+      39 & -14,5$^\circ$ & 13,9$^\circ$ & 28,4$^\circ$ \\
+      1 & -12,9$^\circ$ & 9,2$^\circ$ & 22,1$^\circ$ \\
+      9 & -14,2$^\circ$ & 6,5$^\circ$ & 20,7$^\circ$ \\
+      30 & -7,9$^\circ$ & 4,3$^\circ$ & 12,2$^\circ$ \\
+      2 & -10,3$^\circ$ & 1,8$^\circ$ & 12,1$^\circ$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    Grandes variações angulares indicam mudança expressiva no balanço de potência ativa e no sentido de circulação de potência em parte da rede.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP x ZIP 110\%: Fluxos Ativos}
+  Os maiores desvios de fluxo ativo foram:
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Ramo & $P_{\text{ZIP}}$ (MW) & $P_{\text{ZIP 110\%}}$ (MW) & $\Delta P$ (MW) \\
+      \midrule
+      9--39 & 23,2 & -477,5 & -500,7 \\
+      8--9 & 23,4 & -471,9 & -495,3 \\
+      6--31 & -683,3 & -192,1 & 491,2 \\
+      1--2 & -121,1 & 313,4 & 434,5 \\
+      1--39 & 121,1 & -313,4 & -434,5 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    Há inversão ou forte alteração de sentido em ramos importantes, principalmente próximos às barras 1, 9 e 39.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP x ZIP 110\%: Fluxos Reativos}
+  A potência reativa também sofreu alterações relevantes.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Ramo & $Q_{\text{ZIP}}$ (MVAr) & $Q_{\text{ZIP 110\%}}$ (MVAr) & $\Delta Q$ (MVAr) \\
+      \midrule
+      8--9 & -110,9 & 60,1 & 171,0 \\
+      1--39 & 30,2 & 131,7 & 101,5 \\
+      1--2 & -30,1 & -131,7 & -101,6 \\
+      6--31 & -94,6 & -204,7 & -110,1 \\
+      2--25 & 72,5 & -14,8 & -87,3 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    A maior circulação de reativos ajuda a explicar as quedas de tensão observadas, pois $Q$ tem relação direta com suporte e perfil de tensão.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP x ZIP 110\%: Perdas}
+  A perda ativa total passou de:
+
+  \[
+    42{,}13\ \text{MW} \quad \rightarrow \quad 53{,}04\ \text{MW}
+  \]
+
+  Portanto:
+
+  \[
+    \Delta P_{\text{perdas}} = +10{,}91\ \text{MW}
+  \]
+
+  \begin{block}{Interpretação}
+    O aumento das perdas indica maior esforço elétrico nos ramos. Mesmo quando a carga ativa total efetiva não cresce, a redistribuição dos fluxos pode elevar correntes e perdas.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP x ZIP 110\%: Ramos com Maior Variação de Perdas}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrr}
+      \toprule
+      Ramo & Perda ZIP (MW) & Perda ZIP 110\% (MW) & $\Delta$ perda (MW) \\
+      \midrule
+      8--9 & 0,21 & 5,60 & 5,39 \\
+      2--3 & 1,46 & 4,88 & 3,42 \\
+      1--2 & 0,47 & 3,77 & 3,30 \\
+      9--39 & 0,01 & 2,48 & 2,47 \\
+      25--26 & 0,24 & 1,37 & 1,13 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    As maiores elevações de perdas aparecem nos ramos associados às maiores mudanças de fluxo, especialmente 8--9, 2--3, 1--2 e 9--39.
+  \end{block}
+\end{frame}
+
+\begin{frame}{ZIP 110\%: Conclusão Parcial}
+  O cenário ZIP 110\% foi o mais severo para o sistema.
+
+  \begin{itemize}
+    \item A tensão mínima caiu para 0,964 \pu{} na barra 39.
+    \item Houve grande deslocamento angular nas barras 39, 1 e 9.
+    \item Alguns ramos tiveram inversão ou forte mudança no fluxo ativo.
+    \item As perdas aumentaram 10,91 MW.
+    \item A potência reativa total de carga subiu para 1532,4 MVAr.
+  \end{itemize}
+
+  \begin{block}{Síntese}
+    O caso evidencia que mudanças no modelo e no nível de carga ZIP podem alterar bastante a operação do sistema, principalmente em tensão, ângulo, reativos e perdas.
+  \end{block}
+\end{frame}
+
+\section{Discussão dos Parâmetros}
+
+\begin{frame}{O que Acontece com a Tensão?}
+  \begin{itemize}
+    \item No \casobase, as tensões ficaram entre 0,982 e 1,064 \pu.
+    \item No \casozip, a faixa continuou entre 0,982 e 1,064 \pu.
+    \item No \casozipcento, a tensão mínima caiu para 0,964 \pu.
+  \end{itemize}
+
+  \begin{block}{Explicação pela teoria}
+    A tensão é afetada pelo balanço local de potência ativa e reativa. Como o modelo ZIP altera a potência consumida conforme a tensão, ele muda o ponto de operação calculado pelo fluxo.
+  \end{block}
+
+  O efeito mais crítico apareceu quando o cenário ZIP alterado elevou o esforço reativo do sistema.
+\end{frame}
+
+\begin{frame}{O que Acontece com os Ângulos?}
+  Os ângulos são fortemente relacionados ao fluxo de potência ativa.
+
+  \[
+    P_{km} \approx \frac{V_k V_m}{X_{km}}\sin(\theta_k-\theta_m)
+  \]
+
+  \begin{itemize}
+    \item Quando a distribuição de carga muda, o balanço de potência ativa também muda.
+    \item Para atender esse novo balanço, os ângulos das barras se ajustam.
+    \item Por isso os ângulos variaram mais que os módulos de tensão.
+  \end{itemize}
+
+  \begin{block}{Resultado observado}
+    A maior variação angular foi de 28,4$^\circ$ na barra 39 entre ZIP e ZIP 110\%.
+  \end{block}
+\end{frame}
+
+\begin{frame}{O que Acontece com os Fluxos Ativos?}
+  Os fluxos ativos mudam porque o sistema redistribui a potência entre geração e carga.
+
+  \begin{itemize}
+    \item No Base x ZIP, o maior desvio foi no ramo 6--31: -171,8 MW.
+    \item No ZIP x ZIP 110\%, o maior desvio foi no ramo 9--39: -500,7 MW.
+    \item Ramos próximos às barras com maiores alterações angulares foram os mais impactados.
+  \end{itemize}
+
+  \begin{block}{Interpretação operacional}
+    A mudança dos fluxos pode alterar carregamentos, margens operativas e necessidade de controle de geração ou compensação.
+  \end{block}
+\end{frame}
+
+\begin{frame}{O que Acontece com os Fluxos Reativos?}
+  A potência reativa está diretamente associada ao suporte de tensão.
+
+  \begin{itemize}
+    \item No ZIP 110\%, a carga reativa total aumentou para 1532,4 MVAr.
+    \item Houve grandes alterações de $Q$ em ramos como 8--9, 1--39, 1--2 e 6--31.
+    \item As barras 39, 9 e 1 apresentaram as maiores quedas de tensão.
+  \end{itemize}
+
+  \begin{block}{Explicação pela teoria}
+    Quando a demanda reativa cresce ou se redistribui, as quedas de tensão nos ramos se intensificam, principalmente em áreas com maior circulação de potência.
+  \end{block}
+\end{frame}
+
+\begin{frame}{O que Acontece com as Perdas?}
+  As perdas ativas nos ramos dependem da corrente:
+
+  \[
+    P_{\text{perdas}} \approx R I^2
+  \]
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrr}
+      \toprule
+      Comparação & Perda inicial & Variação \\
+      \midrule
+      Base $\rightarrow$ ZIP & 43,61 MW & -1,48 MW \\
+      ZIP $\rightarrow$ ZIP 110\% & 42,13 MW & +10,91 MW \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    As perdas não dependem só da carga total. Elas dependem da corrente em cada ramo, da impedância e dos caminhos assumidos pelo fluxo de potência.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Relação entre Teoria e Resultado}
+  A teoria prevê que a carga ZIP muda com a tensão:
+
+  \[
+    P,Q = f(V)
+  \]
+
+  Os resultados confirmaram essa ideia:
+
+  \begin{itemize}
+    \item as cargas efetivas mudaram entre os cenários;
+    \item os ângulos se ajustaram ao novo balanço de potência ativa;
+    \item os fluxos nos ramos foram redistribuídos;
+    \item as perdas aumentaram ou diminuíram conforme a nova circulação de corrente;
+    \item a potência reativa influenciou diretamente o perfil de tensão.
+  \end{itemize}
+\end{frame}
+
+\section{Conclusões}
+
+\begin{frame}{Conclusões Principais}
+  \begin{enumerate}
+    \item O \casozip{} manteve tensões próximas ao \casobase, mas alterou ângulos e fluxos.
+    \item A modelagem ZIP modificou a carga efetiva por barra, conforme previsto pela teoria.
+    \item A comparação Base x ZIP apresentou pequena redução de perdas: -1,48 MW.
+    \item O \casozipcento{} foi o cenário mais severo, com queda de tensão até 0,964 \pu{} e aumento de perdas de 10,91 MW.
+    \item Os ramos mais afetados foram aqueles próximos às barras com maior variação angular e de tensão.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Conclusão Final}
+  \begin{block}{Resultado final}
+    A análise mostra que a modelagem ZIP é importante porque representa de forma mais realista a dependência da carga em relação à tensão.
+  \end{block}
+
+  \vspace{0.25cm}
+  No sistema estudado, a mudança para ZIP não provocou grandes violações de tensão, mas alterou a distribuição dos fluxos e dos ângulos.
+
+  \vspace{0.25cm}
+  Quando o cenário ZIP foi modificado, os impactos se tornaram mais fortes: queda de tensão, aumento de potência reativa circulante, mudança de sentido em alguns fluxos e aumento das perdas.
+
+  \vspace{0.25cm}
+  Portanto, os resultados obtidos no ANAREDE estão coerentes com a teoria de fluxo de potência e modelagem ZIP apresentada no material da disciplina.
+\end{frame}
+
+\begin{frame}{Sugestão de Fala para Encerramento}
+  \small
+  ``Com base na teoria, o fluxo de potência determina o estado operativo do sistema por meio das tensões, ângulos, fluxos e perdas. Ao aplicar o modelo ZIP, a carga deixa de ser fixa e passa a depender da tensão em cada barra. Nos nossos resultados, isso aparece claramente: no caso ZIP, as tensões mudaram pouco, mas os ângulos e os fluxos foram redistribuídos. No cenário ZIP 110\%, a condição ficou mais severa, com maior queda de tensão, maior circulação de reativos e aumento das perdas. Assim, a simulação confirma que a forma de modelar a carga influencia diretamente a operação do sistema elétrico.''
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge Obrigado
+
+  \vspace{0.7cm}
+  \Large Perguntas?
+\end{frame}
+
+\end{document}
