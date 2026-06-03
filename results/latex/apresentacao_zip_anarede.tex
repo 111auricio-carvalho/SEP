@@ -336,6 +336,25 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Uso do Diagrama na Apresentação}
+  O diagrama unifilar deve ser usado como apoio visual para localizar barras, ramos, geração, cargas e o ponto de falta.
+
+  \begin{block}{Como apresentar}
+    Primeiro mostrar o diagrama para situar o sistema. Depois apresentar os resultados numéricos de tensão, ângulo, fluxo, perdas e curto-circuito.
+  \end{block}
+
+  \begin{itemize}
+    \item No estudo ZIP, o diagrama ajuda a identificar os ramos mais afetados, como 6--31, 8--9, 9--39 e 1--2.
+    \item No estudo de falta, o diagrama ajuda a localizar a barra 4 e explicar por que barras próximas sofrem maior afundamento de tensão.
+    \item O aviso de grupo base não invalida os resultados numéricos; ele afeta a importação gráfica do diagrama.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fala Sugerida Sobre o Diagrama}
+  \small
+  ``O diagrama foi utilizado para visualizar a topologia do sistema e localizar os pontos analisados. Nos casos ZIP, apareceu um aviso de diferença no grupo base do diagrama, indicando inconsistência gráfica entre a tensão do diagrama e a tensão registrada no caso. Esse aviso não altera os resultados do fluxo de potência, pois os valores analisados foram retirados dos relatórios numéricos do ANAREDE. Assim, o diagrama serve como referência visual, enquanto a análise técnica é feita pelas tensões, ângulos, fluxos, perdas e correntes calculadas.''
+\end{frame}
+
 \section{Resultados Globais}
 
 \begin{frame}{Resumo Global dos Casos}
@@ -749,6 +768,356 @@
   \end{itemize}
 \end{frame}
 
+\section{Tipos de Falta}
+
+\begin{frame}{Por que Analisar Faltas?}
+  Depois do fluxo de potência, o estudo de curto-circuito avalia o comportamento do sistema diante de defeitos.
+
+  \begin{block}{Objetivo do estudo de faltas}
+    Determinar as correntes de curto-circuito, as tensões remanescentes nas barras e os impactos sobre a rede.
+  \end{block}
+
+  Durante uma falta:
+
+  \begin{itemize}
+    \item a impedância vista no ponto de defeito diminui;
+    \item a corrente cresce rapidamente;
+    \item a tensão no ponto de falta sofre queda acentuada;
+    \item barras próximas também sofrem afundamento de tensão;
+    \item os ângulos das tensões podem se deslocar, principalmente em faltas desequilibradas.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Tipos de Falta Considerados}
+  Os principais tipos de falta analisados em sistemas trifásicos são:
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lll}
+      \toprule
+      Sigla & Tipo de falta & Característica \\
+      \midrule
+      FT & Fase-terra & Uma fase em contato com a terra \\
+      FF & Fase-fase & Duas fases em curto entre si \\
+      FFT & Fase-fase-terra & Duas fases em curto com a terra \\
+      3F & Trifásica & Três fases em curto \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Diferença principal}
+    A falta trifásica é equilibrada. As faltas FT, FF e FFT são desequilibradas e exigem análise por componentes simétricas.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Componentes Simétricas}
+  Para estudar faltas desequilibradas, usa-se a decomposição em três redes de sequência:
+
+  \begin{itemize}
+    \item \textbf{sequência positiva}: representa o sistema trifásico equilibrado no sentido normal de rotação;
+    \item \textbf{sequência negativa}: representa desequilíbrios com sequência de fases oposta;
+    \item \textbf{sequência zero}: representa correntes iguais nas três fases, normalmente associadas ao caminho pela terra ou neutro.
+  \end{itemize}
+
+  \begin{block}{Ideia central}
+    Cada tipo de falta conecta as redes de sequência de uma forma diferente. Por isso as correntes, tensões e ângulos mudam conforme o curto.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Falta Trifásica}
+  A falta trifásica é o curto-circuito simultâneo das três fases.
+
+  \begin{itemize}
+    \item É uma falta \textbf{simétrica}.
+    \item As três fases permanecem equilibradas entre si.
+    \item A corrente de curto costuma ser elevada.
+    \item A tensão no ponto da falta tende a cair fortemente nas três fases.
+    \item Os ângulos entre fases permanecem próximos de 120$^\circ$.
+  \end{itemize}
+
+  \begin{block}{Interpretação}
+    Como o sistema continua equilibrado, usa-se principalmente a rede de sequência positiva. É o caso mais direto para avaliar o nível máximo de curto em muitas barras.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Circuito Equivalente: Falta Trifásica}
+  Na falta trifásica equilibrada, apenas a rede de sequência positiva é utilizada.
+
+  \[
+    I_{3F} = \frac{V_{\text{prefalta}}}{Z_1 + Z_f}
+  \]
+
+  \begin{center}
+    \begin{tabular}{c}
+      \fbox{\parbox{0.72\textwidth}{
+      \centering
+      Fonte de sequência positiva $V_{\text{prefalta}}$
+      \quad -- \quad
+      impedância $Z_1$
+      \quad -- \quad
+      impedância de falta $Z_f$
+      }}
+    \end{tabular}
+  \end{center}
+
+  \begin{block}{Característica essencial}
+    É uma falta simétrica: as três fases têm correntes iguais em módulo e defasadas de 120$^\circ$. Não aparecem sequências negativa e zero.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Falta Fase-Terra}
+  A falta fase-terra ocorre quando uma fase entra em contato com a terra.
+
+  \begin{itemize}
+    \item É uma falta \textbf{desequilibrada}.
+    \item A fase em falta tem grande queda de tensão.
+    \item As fases sãs podem permanecer com tensão elevada ou sofrer deslocamento angular.
+    \item A corrente depende fortemente do aterramento e da impedância de sequência zero.
+    \item Aparecem componentes de sequência positiva, negativa e zero.
+  \end{itemize}
+
+  \begin{block}{Efeito típico}
+    A tensão da fase defeituosa vai para valor muito baixo no ponto da falta, enquanto as outras fases podem ficar acima de 1,0 \pu{} dependendo da rede.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Circuito Equivalente: Falta Fase-Terra}
+  Na falta fase-terra, as três redes de sequência ficam ligadas em série.
+
+  \[
+    I_{FT} = \frac{3V_{\text{prefalta}}}{Z_1 + Z_2 + Z_0 + 3Z_f}
+  \]
+
+  \begin{center}
+    \fbox{\parbox{0.78\textwidth}{
+    \centering
+    $V_{\text{prefalta}}$
+    \quad -- \quad
+    $Z_1$
+    \quad -- \quad
+    $Z_2$
+    \quad -- \quad
+    $Z_0$
+    \quad -- \quad
+    $3Z_f$
+    }}
+  \end{center}
+
+  \begin{block}{Característica essencial}
+    Precisa de caminho de sequência zero. Por isso depende muito do aterramento de transformadores, geradores e neutros.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Falta Fase-Fase}
+  A falta fase-fase ocorre quando duas fases entram em curto entre si, sem contato direto com a terra.
+
+  \begin{itemize}
+    \item É uma falta \textbf{desequilibrada}.
+    \item As duas fases envolvidas sofrem forte perturbação.
+    \item A fase não envolvida é menos afetada.
+    \item Não há componente de sequência zero se não existir caminho pela terra.
+    \item A corrente circula principalmente entre as duas fases em falta.
+  \end{itemize}
+
+  \begin{block}{Efeito típico}
+    As tensões das fases em falta se aproximam uma da outra, reduzindo a tensão entre elas; os ângulos deixam de apresentar equilíbrio ideal.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Circuito Equivalente: Falta Fase-Fase}
+  Na falta fase-fase, são usadas as redes de sequência positiva e negativa.
+
+  \[
+    I_{FF} = \frac{\sqrt{3}V_{\text{prefalta}}}{Z_1 + Z_2 + Z_f}
+  \]
+
+  \begin{center}
+    \fbox{\parbox{0.78\textwidth}{
+    \centering
+    Rede de sequência positiva $Z_1$
+    \quad conectada à \quad
+    rede de sequência negativa $Z_2$
+    \quad no ponto de falta
+    }}
+  \end{center}
+
+  \begin{block}{Característica essencial}
+    Não há corrente de terra idealmente. Assim, a rede de sequência zero não participa quando a falta é apenas entre duas fases.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Falta Fase-Fase-Terra}
+  A falta fase-fase-terra ocorre quando duas fases entram em curto entre si e também com a terra.
+
+  \begin{itemize}
+    \item É uma falta \textbf{desequilibrada}.
+    \item Envolve corrente entre fases e corrente para a terra.
+    \item Usa redes de sequência positiva, negativa e zero.
+    \item Normalmente é mais severa que a falta fase-fase.
+    \item Pode produzir correntes elevadas e forte afundamento de tensão.
+  \end{itemize}
+
+  \begin{block}{Efeito típico}
+    As duas fases em falta sofrem queda intensa de tensão; a fase sã também pode ser afetada por deslocamento de neutro e acoplamento da rede.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Circuito Equivalente: Falta Fase-Fase-Terra}
+  Na falta fase-fase-terra, as três redes de sequência participam, mas a conexão equivalente é diferente da falta fase-terra.
+
+  \begin{center}
+    \fbox{\parbox{0.82\textwidth}{
+    \centering
+    Rede de sequência positiva $Z_1$ alimenta o ponto de falta. \\
+    As redes de sequência negativa $Z_2$ e zero $Z_0$ ficam associadas ao retorno pelo defeito e pela terra.
+    }}
+  \end{center}
+
+  Para falta sólida, a corrente depende de $Z_1$, $Z_2$ e $Z_0$ combinadas no ponto de falta.
+
+  \begin{block}{Característica essencial}
+    É uma falta assimétrica com caminho para terra. Costuma ser mais severa que FF porque inclui corrente de sequência zero.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Resumo dos Efeitos nas Grandezas}
+  \begin{table}
+    \centering
+    \scriptsize
+    \begin{tabular}{llll}
+      \toprule
+      Falta & Tensões & Correntes & Ângulos \\
+      \midrule
+      FT & Uma fase cai muito & Corrente para terra & Forte desequilíbrio \\
+      FF & Duas fases perturbadas & Corrente entre fases & Perda de simetria \\
+      FFT & Duas fases caem muito & Corrente entre fases e terra & Forte desequilíbrio \\
+      3F & Três fases caem juntas & Corrente trifásica elevada & Mantém equilíbrio relativo \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Ideia para apresentar}
+    A falta trifásica afeta as três fases de forma equilibrada. As faltas assimétricas afetam as fases de maneira diferente, por isso aparecem tensões e ângulos desbalanceados.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Resumo dos Circuitos Equivalentes}
+  \begin{table}
+    \centering
+    \scriptsize
+    \begin{tabular}{llll}
+      \toprule
+      Falta & Redes usadas & Ligação equivalente & Característica essencial \\
+      \midrule
+      3F & $Z_1$ & Só sequência positiva & Curto equilibrado \\
+      FT & $Z_1$, $Z_2$, $Z_0$ & Redes em série & Depende do aterramento \\
+      FF & $Z_1$, $Z_2$ & Positiva e negativa & Sem sequência zero ideal \\
+      FFT & $Z_1$, $Z_2$, $Z_0$ & Redes combinadas no defeito & Desequilíbrio com terra \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Como explicar oralmente}
+    O circuito equivalente muda porque cada tipo de curto impõe uma condição diferente entre fases e terra. Essa condição define quais sequências aparecem na análise.
+  \end{block}
+\end{frame}
+
+\section{Resultados de Faltas}
+
+\begin{frame}{Níveis de Curto-Circuito por Tipo de Falta}
+  Resultados do ANAFAS para algumas barras representativas:
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{lrrrr}
+      \toprule
+      Barra & FT (kA) & FF (kA) & FFT (kA) & 3F (kA) \\
+      \midrule
+      4 & 6,370 & 8,481 & 8,816 & 9,793 \\
+      16 & 8,277 & 10,400 & 10,905 & 12,009 \\
+      30 & 9,134 & 8,605 & 9,639 & 9,937 \\
+      39 & 30,608 & 27,271 & 31,107 & 31,490 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{block}{Interpretação}
+    A barra 39 apresentou os maiores níveis de curto entre os dados extraídos, chegando a 31,490 kA na falta trifásica.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Comparação dos Tipos de Falta}
+  Observa-se que a corrente de falta depende do tipo de defeito e da barra analisada.
+
+  \begin{itemize}
+    \item Na barra 4, a falta trifásica foi a maior: 9,793 kA.
+    \item Na barra 16, a falta trifásica também foi a maior: 12,009 kA.
+    \item Na barra 39, os valores foram muito altos para todos os tipos.
+    \item A falta fase-terra na barra 39 chegou a 30,608 kA, mostrando forte contribuição da rede e do aterramento.
+  \end{itemize}
+
+  \begin{block}{Leitura técnica}
+    A falta trifásica tende a ser a referência para nível de curto simétrico, mas faltas envolvendo terra podem ser muito severas dependendo das impedâncias de sequência zero.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Falta FT na Barra 4: Tensões Durante a Falta}
+  Para a falta fase-terra na barra 4, o ANAFAS indicou corrente de falta de:
+
+  \[
+    I_f = 6{,}37\ \text{kA}
+  \]
+
+  Tensões em barras próximas:
+
+  \begin{table}
+    \centering
+    \scriptsize
+    \begin{tabular}{lrrrrrr}
+      \toprule
+      Barra & $V_a$ & $\angle a$ & $V_b$ & $\angle b$ & $V_c$ & $\angle c$ \\
+      \midrule
+      2 & 0,766 & -0,3$^\circ$ & 1,004 & -120,6$^\circ$ & 1,007 & 120,5$^\circ$ \\
+      3 & 0,511 & 0,0$^\circ$ & 1,065 & -125,9$^\circ$ & 1,070 & 125,7$^\circ$ \\
+      4 & 0,000 & 0,0$^\circ$ & 1,211 & -134,5$^\circ$ & 1,215 & 134,4$^\circ$ \\
+      5 & 0,360 & -1,4$^\circ$ & 1,088 & -127,0$^\circ$ & 1,084 & 127,2$^\circ$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Interpretação da Falta FT na Barra 4}
+  A falta fase-terra foi aplicada na fase A da barra 4.
+
+  \begin{itemize}
+    \item Na barra 4, $V_a = 0{,}000$ \pu, pois a fase A está em curto para a terra.
+    \item As fases B e C na barra 4 subiram para aproximadamente 1,21 \pu.
+    \item Nas barras próximas, a fase A também sofreu afundamento: 0,511 \pu{} na barra 3 e 0,360 \pu{} na barra 5.
+    \item Os ângulos das fases B e C se deslocaram para cerca de $\pm 134^\circ$, mostrando desequilíbrio.
+  \end{itemize}
+
+  \begin{block}{Conclusão do caso}
+    O resultado confirma a teoria: em falta fase-terra, a fase defeituosa sofre queda severa de tensão, enquanto as fases sãs ficam desequilibradas em módulo e ângulo.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Relação entre Fluxo de Potência e Falta}
+  O fluxo de potência e o curto-circuito são estudos complementares.
+
+  \begin{itemize}
+    \item O fluxo de potência determina o estado pré-falta: tensões, ângulos, gerações e carregamentos.
+    \item O estudo de falta usa esse estado para avaliar correntes e tensões durante o defeito.
+    \item Tensões pré-falta influenciam a corrente calculada.
+    \item A localização da falta define quais barras terão maior afundamento de tensão.
+  \end{itemize}
+
+  \begin{block}{Ligação com a teoria}
+    O material da disciplina destaca que, em termos práticos, antes da análise de curto-circuito é necessário executar o fluxo de potência para conhecer as tensões pré-falta.
+  \end{block}
+\end{frame}
+
 \section{Conclusões}
 
 \begin{frame}{Conclusões Principais}
@@ -757,7 +1126,8 @@
     \item A modelagem ZIP modificou a carga efetiva por barra, conforme previsto pela teoria.
     \item A comparação Base x ZIP apresentou pequena redução de perdas: -1,48 MW.
     \item O \casozipcento{} foi o cenário mais severo, com queda de tensão até 0,964 \pu{} e aumento de perdas de 10,91 MW.
-    \item Os ramos mais afetados foram aqueles próximos às barras com maior variação angular e de tensão.
+    \item Nas faltas, as tensões e correntes mudaram conforme o tipo de curto-circuito e a localização do defeito.
+    \item A falta FT na barra 4 confirmou o comportamento esperado: tensão da fase defeituosa igual a zero e desequilíbrio nas fases sãs.
   \end{enumerate}
 \end{frame}
 
@@ -773,12 +1143,15 @@
   Quando o cenário ZIP foi modificado, os impactos se tornaram mais fortes: queda de tensão, aumento de potência reativa circulante, mudança de sentido em alguns fluxos e aumento das perdas.
 
   \vspace{0.25cm}
-  Portanto, os resultados obtidos no ANAREDE estão coerentes com a teoria de fluxo de potência e modelagem ZIP apresentada no material da disciplina.
+  Na análise de faltas, os resultados também foram coerentes com a teoria: faltas simétricas afetam as três fases de forma equilibrada, enquanto faltas assimétricas provocam desequilíbrio entre módulos e ângulos das tensões.
+
+  \vspace{0.25cm}
+  Portanto, os resultados obtidos no ANAREDE e no ANAFAS estão coerentes com a teoria apresentada no material da disciplina.
 \end{frame}
 
 \begin{frame}{Sugestão de Fala para Encerramento}
   \small
-  ``Com base na teoria, o fluxo de potência determina o estado operativo do sistema por meio das tensões, ângulos, fluxos e perdas. Ao aplicar o modelo ZIP, a carga deixa de ser fixa e passa a depender da tensão em cada barra. Nos nossos resultados, isso aparece claramente: no caso ZIP, as tensões mudaram pouco, mas os ângulos e os fluxos foram redistribuídos. No cenário ZIP 110\%, a condição ficou mais severa, com maior queda de tensão, maior circulação de reativos e aumento das perdas. Assim, a simulação confirma que a forma de modelar a carga influencia diretamente a operação do sistema elétrico.''
+  ``Com base na teoria, o fluxo de potência determina o estado operativo do sistema por meio das tensões, ângulos, fluxos e perdas. Ao aplicar o modelo ZIP, a carga deixa de ser fixa e passa a depender da tensão em cada barra. Nos nossos resultados, isso aparece claramente: no caso ZIP, as tensões mudaram pouco, mas os ângulos e os fluxos foram redistribuídos. No cenário ZIP 110\%, a condição ficou mais severa, com maior queda de tensão, maior circulação de reativos e aumento das perdas. Na parte de faltas, a falta trifásica representa o defeito equilibrado, enquanto FT, FF e FFT provocam desequilíbrios nas tensões e nos ângulos. Assim, os resultados confirmam que tanto o modelo de carga quanto o tipo de falta influenciam diretamente a resposta do sistema elétrico.''
 \end{frame}
 
 \begin{frame}
