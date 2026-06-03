@@ -94,13 +94,14 @@ AREA     1                                           40  40  40  40 60.0
 
 Interpretacao usada no trabalho: `A=40` e `C=40` representam as parcelas de corrente constante; `B=40` e `D=40` representam as parcelas de impedancia constante. A parcela restante e potencia constante, logo `20% P`, `40% I`, `40% Z`.
 
-## Proximos passos
+## Estado dos resultados
 
-1. Testar a leitura/simulacao no ANAFAS com os arquivos atuais:
-   - `ieee39_base.ana`: base de rede para niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
-   - `ieee39_base.lst`: desenho associado ao caso base.
-   - `ieee39_falta_barra4.ana`: caso/arquivo operacional para falta FT na barra 4, se ainda for mantido separado.
-2. Extrair os resultados ANAFAS para montar as tabelas finais de curto-circuito.
+Os casos ANAREDE base, ZIP e ZIP 110% convergiram e os resultados foram extraidos para CSV.
+
+Os resultados ANAFAS tambem foram extraidos:
+
+- `ieee39_base.ana`: niveis de curto-circuito FT, FF, FFT e simetrica em todas as barras.
+- `ieee39_falta_barra4.ana`: falta FT na barra 4, com corrente de falta e tensoes reportadas nas barras do relatorio.
 
 ## Preparacao ANAFAS atual
 
@@ -119,10 +120,10 @@ Estado atual do `ieee39_base.ana`:
 - A topologia e os valores de impedancia foram conferidos contra a versao anterior de `ieee39_base.ana`.
 - Nao foram encontrados circuitos duplicados, barras faltantes ou referencias a barras inexistentes.
 
-Ponto de atencao no `ieee39_base.ana`:
+Pontos de atencao no `ieee39_base.ana`:
 
 - O campo `VBAS` do `DBAR` foi preenchido com `345 kV` nas 39 barras, coerente com a representacao usual do IEEE 39 barras como sistema New England 345 kV e com o arquivo especifico `ieee39_falta_barra4.ana`.
-- Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha um campo de tap evidente no formato `DCIR` usado no `.ana`. Para curto-circuito, a primeira tentativa sera com o arquivo atual.
+- Os taps dos transformadores existem no caso ANAREDE `.pwf`, mas nao ha um campo de tap evidente no formato `DCIR` usado no `.ana`.
 
 Estado atual do `ieee39_base.lst`:
 
@@ -187,11 +188,15 @@ Arquivos principais:
 - `results/latex/relatorio_tabelas.tex`
 - `results/latex/classe_uftex/uftex.cls`
 - `results/latex/classe_uftex/logouft.pdf`
+- `results/anafas_base_fault_levels.csv`
+- `results/anafas_ft_barra4_summary.csv`
+- `results/anafas_ft_barra4_voltages.csv`
 
-Para regerar as tabelas e o relatorio LaTeX:
+Para regerar as tabelas e o relatorio LaTeX de tabelas:
 
 ```powershell
 python .\results\extract_results.py
+python .\results\extract_anafas.py
 python .\results\generate_latex.py
 ```
 
@@ -201,6 +206,8 @@ Extracao validada:
 
 - 39 barras por caso.
 - 46 ramos por caso.
+- Niveis de curto-circuito ANAFAS para 39 barras.
+- Falta FT na barra 4: corrente de falta `6.370 kA`; fase A na barra 4 com tensao `0.000 pu`.
 
 ## Observacoes de formato
 
